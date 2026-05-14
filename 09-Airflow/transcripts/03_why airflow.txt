@@ -1,0 +1,271 @@
+Hello guys.
+
+So we are going to continue the discussion with respect to airflow.
+
+Now one of the very important question, right, why airflow for MLOps.
+
+And this really needs to be addressed in this particular module.
+
+So I'll be covering everything about this particular question in this video itself.
+
+Right.
+
+So in MLOps, uh, orchestrating ML workflows efficiently is crucial for ensuring that data pipeline
+
+model training and deployment tasks happen smoothly and in an automated manner.
+
+Airflow is well suited for this purpose because it allows you to define, automate, and monitor every
+
+steps in a ML pipeline.
+
+So here it's mostly, uh, talking more about, uh, you know, automated manner, how we can actually
+
+schedule it.
+
+And.
+
+All right.
+
+And airflow can definitely play a very crucial law, but I will just go ahead and point wise, discuss
+
+like why airflow is a great fit for MLOps.
+
+Okay.
+
+So first reason that you will be able to see is something called as orchestrating.
+
+Orchestrating ML pipelines.
+
+It's not only ML pipelines, I will also say ML and ETL pipelines also.
+
+Okay.
+
+ETL pipeline.
+
+Now in this particular case.
+
+ETL pipeline or orchestrating.
+
+ML pipeline.
+
+Let's say that I have if I probably consider the life cycle of a data science project.
+
+One of the main important step is something like data ingestion.
+
+Okay.
+
+So here I have my data ingestion.
+
+And then I specifically have my next task if I creating in the form of directed acyclic graph, you
+
+know after data ingestion I need to probably do the data preprocessing okay.
+
+Data preprocessing.
+
+And along with this you'll be able to see that I will also be having something called as model training
+
+and eval.
+
+Let's say model training and eval.
+
+And finally you have something called as model deployment.
+
+So here you have finally model deployment.
+
+Let's take this basic four fundamental modules that every data scientist or a machine learning engineer
+
+applies.
+
+Right.
+
+So whenever I talk about orchestrating ML pipelines, what does it basically include.
+
+Right.
+
+So ML pipelines machine learning pipeline always or it involves complex task, you know, such as data
+
+ingestion, data pre-processing model training and eval and model evaluation model deployment.
+
+You know, and to automate this entire task, airflow is an amazing tool to probably do it because at
+
+the end of the day, with the help of airflow, you can actually create Dag, right?
+
+And if you don't know about Dag, it is nothing but directed acyclic graph.
+
+So here you will be able to define a task.
+
+Here you will be able to even define the dependencies okay.
+
+Dependencies.
+
+Dependencies.
+
+Right?
+
+When we say task and dependencies we know like in what order, every step is basically going to execute.
+
+And the best thing about this is that once we properly deploy this entire application into the production,
+
+right, all these steps needs to be executed, uh, in an automated way.
+
+Right?
+
+There should not be any manual task involved over here.
+
+Right.
+
+And for this, your airflow can be really, really much amazing.
+
+So second important reason why we should specifically use this because of the task automation okay.
+
+Task automation.
+
+Right.
+
+And this task automation you'll be seeing once we probably see some of the examples how we will be automating
+
+this entire task and all.
+
+But this is one of the second reason.
+
+The third important reason is uh, and this is the most important thing.
+
+It is related to monitoring and alerts.
+
+Okay.
+
+Now by using airflow, right.
+
+Uh, I can probably schedule each and everything.
+
+I can schedule my ETL pipeline.
+
+That how frequently I want my data to be captured in my source.
+
+Let's say I want weekly.
+
+right?
+
+How frequently I need to do my model retraining.
+
+Right.
+
+Model retraining or how how how how how regularly I need to probably execute this entire life cycle.
+
+Right.
+
+All this all these modules at once.
+
+So all these things can be set up with the help of monitoring and alerts.
+
+So here, if I just go ahead and talk about some important points with respect to model monitoring and
+
+alerts here, I will just go ahead and write right down.
+
+It provides you real time monitoring.
+
+Now in this side this real time monitoring you will be able to see the logs.
+
+You'll be able to see the uh and how we are able to see this, uh, airflow has something called as
+
+airflow UI.
+
+Okay.
+
+And with the help of this, we'll be able to see it.
+
+I'll show you everything in the next video when we are discussing about the practical application,
+
+like when we start working this with the help of code and all.
+
+Okay.
+
+Uh, and the next important thing in this monitoring and log, uh, alerts is that here you'll also
+
+be able to see the task logs, which is crucial, you know, uh, task logs, like how the things are
+
+basically getting executed completely daily.
+
+And if there is any error, you'll be able to also debug it and troubleshoot it very much quickly.
+
+Third thing is alerts and notification.
+
+So this also actually provides you alerts and notification like mail and all or mail.
+
+And also let me just go ahead and define this alerts and notifications also okay.
+
+So you can set up email alerts slack alerts any kind of alerts that you really want okay.
+
+And uh, fourth thing over here is something called as let's say if you, if you probably, uh, face
+
+any kind of error.
+
+Right.
+
+Let's say, um, I want to probably implement a data ingestion.
+
+I'm, I'm reading from an API and suddenly there is a network failure during the data fetch.
+
+Right.
+
+So what we can basically do is that here there is a concept of something called as retry mechanism.
+
+Right.
+
+Retry mechanism.
+
+What it will do is that uh, it will probably uh, you know, it will try that specific task based on
+
+some rule.
+
+It will retry that specific task.
+
+Right.
+
+It will retry some that task which failed on some predefined rules.
+
+So this this is just some examples that I really want to talk about.
+
+You know.
+
+But obviously if I'm just talking it about that, if I'm just listing it down, you will not be able
+
+to understand.
+
+So I'm just telling you that wait for some videos, then there will be able to see the entire practical
+
+implementation and how everything will be able to perform.
+
+Right.
+
+So this was about monitoring and alerts.
+
+And this actually because of this main points one is orchestrating ML and ETL pipelines, task automation,
+
+monitoring and alerts where you can probably do real time monitoring, task logs, alerts and notification
+
+retry mechanism.
+
+Because of this.
+
+Um, this really is a very good MLOps platform, both for data engineering projects, both for data
+
+science projects.
+
+And.
+
+All right.
+
+So I hope you like this particular video.
+
+Now in the next video.
+
+So what we are going to do is that we are going to probably go ahead and discuss more about it, and
+
+we'll see some practical implementation, how we can go ahead and get started with airflow.
+
+So yes, this was it from my side.
+
+I'll see you in the next video.
+
+Thank you.

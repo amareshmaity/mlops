@@ -1,0 +1,605 @@
+Hello guys!
+
+So now I'm quite excited to start the practical implementation of airflow.
+
+Uh, before I go ahead, you know, I really want to introduce you to this amazing platform which is
+
+called as astronomer.
+
+And we also see it as Astro.
+
+Uh, what exactly is Astro or Astronomer?
+
+It is a managed platform for Apache Airflow.
+
+So here you can see airflow is there.
+
+That simplifies running and scaling airflow while providing additional enterprise features like monitoring,
+
+security and automation.
+
+Okay, so this entire platform we are going to specifically use, and the best thing will be that this
+
+platform will be running your airflow within a Docker container.
+
+So for this you definitely need to have a Docker installed or Docker installed in your, uh, laptop
+
+or your desktop.
+
+And then only you will be able to use this, okay.
+
+Because at the end of the day, when we are creating all our end to end projects, uh, specifically
+
+using airflow, whatever task, we are going to define all these tasks, um, we are going to write
+
+it down, and we are also going to use other services which will be specifically running in Docker container.
+
+And we'll be making sure that using Docker Compose will make them interact with one another.
+
+Right.
+
+So in this video I'll be talking more about astronomy and how we can probably go ahead and set up the
+
+airflow with Astro.
+
+Okay.
+
+So if you just go ahead and search for astronomy documentation with airflow.
+
+So here you also get an amazing, uh, entire documentation how you can probably get started.
+
+And trust me, you know, before I used to use airflow independently to try I used to try to run it
+
+as a Docker container.
+
+A lot of errors and issues I used to face because there is a lot of dependencies issues.
+
+But with the help of this particular platform, it has become really, really easy.
+
+Now let me just go ahead and talk more about this.
+
+Astro, as I said that it is a managed platform for the entire Apache Airflow and everything is basically
+
+running in a Docker container.
+
+Now to get started, what I will do, I will just go to my folder.
+
+Let me just open my folder.
+
+That is MLOps.
+
+Okay.
+
+Now inside this, I have this, uh, airflow.
+
+Astro.
+
+I've created this particular folder.
+
+You can also create the folder anywhere you want.
+
+Okay, I will copy this and I will open my command prompt.
+
+Okay.
+
+Once I open my command prompt, I will just go ahead and, uh, go to my e drive, okay.
+
+And I will say CD and I'll specifically go to this particular location that is the airflow Astro.
+
+Okay.
+
+Once I go to this particular location, then I'm going to go ahead and, uh, probably create my project
+
+inside this.
+
+So I will go ahead and write code dot okay.
+
+Once I write code dot.
+
+So here you will be able to see that my VS code has got opened.
+
+Now since we are getting started uh, with setting up the uh, airflow with Astro, uh, this is the
+
+step that everybody needs to follow.
+
+And then probably we'll also see that how we can run this entire airflow.
+
+Okay.
+
+And, uh, right now here, let me just go ahead and open my terminal.
+
+Okay.
+
+And here I'm going to open my command prompt.
+
+Or you can also work with git bash.
+
+Okay.
+
+So once you go over here, the first command.
+
+See, right now I don't have any project structure.
+
+Nothing as such.
+
+Right.
+
+And I really want to go ahead and start with a project structure.
+
+Also probably I need to define a project structure.
+
+I need to probably create all the files and all.
+
+Now with the help of this Astro.
+
+Right.
+
+It becomes very easy to probably create this entire project structure.
+
+And for the airflow, the kind of project structure that is required automatically will be created by
+
+this.
+
+Now, in order to do that, just go ahead and write this particular command Astro dev init.
+
+So once you basically write this automatically, it will initialize an astro project.
+
+Uh, pulling the airflow development files from Astro runtime 12 .1.1 okay.
+
+And it is going to initialize an empty Astro project in this particular drive.
+
+Now, if I just go ahead and open it here, you can see the entire project structure is basically created.
+
+Right.
+
+And here you have this dot astro file.
+
+Here you have this DAGs folder right.
+
+DAGs folder is specifically for airflow.
+
+Right.
+
+And if you probably see over here a Docker file is also created.
+
+So this is the Docker file that will be uh, you know, when once we probably run this entire code,
+
+right.
+
+Once we run this entire project, this is the Docker that is basically going to run in the Docker container.
+
+And this internally also calls airflow.
+
+And it will be running in one, one, one another port itself.
+
+Okay.
+
+So all those things we'll see how we can actually run it.
+
+But I think you found this particular step very much easy because just by writing one line of command,
+
+the entire project structure is ready.
+
+Okay.
+
+Now we'll keep this project structure like this itself.
+
+And then we will start working in different different folders.
+
+Now let me talk about one of the very important folder which is called as DAGs.
+
+And this inside this particular folder we basically create all our DAGs.
+
+So let's take this example which is called as example dag.py.
+
+And here uh this particular example is a default example that is given by Astro.
+
+Here they are saying that hey we have astronaut ETL example tag.
+
+So this is an ETL pipeline example wherein we are reading something.
+
+Okay so here is my tags that is basically created.
+
+Then here you can see I have defined my task.
+
+We will go step by step will try to understand it.
+
+This is hitting an API.
+
+It is bringing all the details and it is returning the list of people in the space.
+
+Okay, along with this, you'll be able to see that there is another task which is basically called
+
+a sprint.
+
+So two important information why we are seeing this as ETL because one, it is trying to get all the
+
+astronauts from the API right.
+
+ETL components, if you remember from my diagram.
+
+So if you probably see from the top diagram that we have actually discussed, right.
+
+Let me just go to that particular diagram.
+
+And then you should be able to understand what I am exactly talking about.
+
+Right.
+
+So if I go to my full screen, if you see over here in the data pipeline, right, we create an ETL
+
+pipeline itself in ETL basically means extraction, data extraction, transformation and loading.
+
+Right.
+
+So similarly here also what it is doing, it is probably getting the astronauts detail from an API,
+
+which is this specific API.
+
+After getting all the information, it is returning the list of people in the space.
+
+And finally we have created another task which is printing all the names.
+
+Okay, so this two specific task has been scheduled.
+
+And whenever this API has new data, it should be able to we should be able to schedule it regularly.
+
+So yet I have not discussed about the coding part and all.
+
+Don't worry because from the next video onwards we will go ahead and start from basics, will create
+
+projects, multiple projects and I'll run it.
+
+I'll probably write it line by line and show it to you.
+
+Okay, now, uh, let's run this entire code.
+
+As I said that there are two important modules or two important tasks in this particular Dag.
+
+So let's run this in order to run it.
+
+Just go ahead and open terminal.
+
+Okay.
+
+Now inside my command prompt, what I will do.
+
+First of all just see in Docker nothing should be running.
+
+So right now my Docker is not running any services over here.
+
+So here I will go ahead and write Astro in order to run it.
+
+Okay.
+
+Astro dev start.
+
+Right.
+
+So as soon as we go ahead and write this particular command.
+
+Astro dev start, my entire execution will basically start.
+
+So initially you can see it is going to build each and every thing over here.
+
+It is building this particular Docker file and from that it is calling this coi.io astronomer Astro
+
+runtime 12.12.
+
+And after that it is just going to run each and every thing in the docker itself, right.
+
+So using Docker.
+
+So here you can see this is basically getting created.
+
+Now your airflow is basically getting started up.
+
+Now if I open my Docker.
+
+So it will take some time to run for the first time.
+
+Here you can see my four new containers has got started.
+
+So one of the container is about the web server which is running over here.
+
+By default a Postgres is scheduled over here that is also running.
+
+So if you probably go ahead and see now see this as soon as it runs, this entire airflow has got started.
+
+Okay.
+
+And it is running in your 8080.
+
+If this is not automatically opening what you can do, you can go to your Docker over here.
+
+You can see where the web server is running.
+
+It is running in 8080.
+
+You can also go ahead and click over here and it will say open with browser.
+
+Now as soon as you open this is the airflow UI right.
+
+Completely managed by Astro okay.
+
+And this entirely is running in the Docker container.
+
+Okay.
+
+So here I will go ahead and write my by default username and password will be admin admin.
+
+Okay.
+
+So just go ahead and write admin admin.
+
+This is also set up.
+
+I will show you where exactly it is set up and all and how you can actually see all these things, how
+
+you can change it.
+
+Also, I will go ahead and click on Sign in.
+
+Now here is my Dag.
+
+Now see this.
+
+This is my Dag that has got created that is called as example astronauts okay.
+
+And right now it is disabled because we have not enabled.
+
+And if I talk about this particular Dag, if I just go inside this just double click this.
+
+So here you will be able to see that I have two important tasks.
+
+One is get astronaut and the other one is print astronaut.
+
+Okay.
+
+And if I really want to see this in the form of graph.
+
+So here is what you will be able to see.
+
+Here you have guest astronaut and here you have print astronaut okay.
+
+And this is my data set or API which we are actually focusing on.
+
+So from here my data will be picked and then this will get executed.
+
+Now in order to run this there is something called as a trigger Dag over here okay.
+
+And here we can probably go ahead and trigger the schedule.
+
+You can see it is daily.
+
+And this is basically the time where it basically has to run.
+
+Right.
+
+So here uh, 2020 for ten to uh, from this particular date it has started.
+
+And at this particular time it needs to probably run this entire Dag.
+
+But if you really want to manually trigger it, just go ahead and click on this as soon as you click
+
+on this.
+
+So here you can see this both the task is now running.
+
+Now you are getting green signal.
+
+And with respect to this everything is basically also getting displayed.
+
+Now, if I go to the graphs here, you can see if it is showing us green signal.
+
+That basically means it is running in an amazing way, like it is running correctly.
+
+And we are also able to get the results.
+
+In order to see the results, all you have to do is that let's say I will go over here in the Get astronaut.
+
+If I click over here, here you will also be able to see the event log right.
+
+So event log displays some information.
+
+Then if you want to see the code.
+
+Code also is basically getting displayed.
+
+But uh, since I want to probably go ahead and show each and everything.
+
+So let let me do one thing.
+
+Okay.
+
+So uh, here what I will do, I will go to my example astronaut.
+
+So this example astronauts I'm seeing.
+
+And here you can see my code.
+
+Here there is something called as event log okay.
+
+Now in the event log all the necessary information is basically displayed.
+
+Print astronaut which all things are basically there and all are are available.
+
+All these logs are also visible to you okay.
+
+Any errors you will also be able to see that okay.
+
+Once you see this okay let me do one thing.
+
+Let me just reload.
+
+Let me go to the Dax and open one of my Dag itself over here.
+
+So, uh, inside this, uh, here you are able to see that.
+
+Okay, I'm able to see graph.
+
+I'm able to see, uh, Gant, uh, code event log, run duration, task duration.
+
+Right.
+
+Uh, calendar.
+
+Right.
+
+When all things this.
+
+This needs to be getting executed.
+
+Now, if I go to the graph, if I go ahead and click on Print astronaut.
+
+Okay.
+
+Print print astronaut or let me just go and click over here and see this print astronaut okay.
+
+So here uh, if you go ahead and click on Event Logs here, all the information is basically getting
+
+displayed.
+
+And uh, if I go and see the details here also you'll be able to see that what task or what run ID it
+
+has got executed.
+
+Uh, right now we are not printing much more details.
+
+So that is the reason you're not able to see the complete logs.
+
+But, uh, in the upcoming videos, I will show you multiple ways to probably see this logs also, so
+
+that you'll be able to see each and everything and how it is basically getting displayed right.
+
+So this is way like how tasks are getting executed and it is getting executed in a successful way.
+
+Okay.
+
+And here are some of the details that you are able to see from left to right.
+
+Okay.
+
+All the all the all the types of graphs and all or what task is basically created when everything you'll
+
+be able to see, see, as soon as I go ahead and click on Get Astronauts, if you go ahead and see there
+
+is something called as logs, right?
+
+So here also you can see that we are printing some information.
+
+Right.
+
+Craft is name and all how to do this and all.
+
+I will talk about it when we are discussing about it right.
+
+So every stage what is basically happening all the information is also basically getting displayed.
+
+There is also a component which is called as Xcom.
+
+Xcom basically talks about like what information is basically passing from one task to the other task.
+
+Now in this particular case, you can see number of people in space is basically getting passed.
+
+If I go ahead and click away, if I go ahead and click over here, other information over here, nothing
+
+is getting passed.
+
+So that is null over here.
+
+But if I go ahead and click over here and if I go ahead and click over here, all this information is
+
+basically getting passed to this print astronaut craft function or task.
+
+Right.
+
+So this was just a basic example to show you that how you can go ahead and set up the basic airflow
+
+project along with the Astro.
+
+And here I did not even write a single line of code, but I hope it is able to make you understand that
+
+how to run this right now.
+
+In order to stop this, I will just go ahead and write Astro Dev.
+
+Stop.
+
+As soon as I do this, you will be able to see my entire Docker container will get stopped and my entire
+
+application will also get stopped.
+
+Now in the upcoming examples, what I'm actually going to do is that I'll show you some basic examples,
+
+how you can go ahead and start your Dag project, and how you can go ahead and start writing each and
+
+everything.
+
+Okay.
+
+Uh, I will be talking about how you can create tasks, how you can probably work with logs, how you
+
+can probably work with Eskom and do multiple things.
+
+Right.
+
+All those things will basically be discussed about it.
+
+Okay.
+
+And if I also show you this project structure.
+
+The project structure looks like you have a Dax folder.
+
+You have include folder, you have plugins folder.
+
+You have test folder right here.
+
+Obviously you need to write the test cases.
+
+This is very much clear.
+
+So this is my test cases that is written by default.
+
+But don't worry we will modify each and every file environment variable any environment variable you
+
+want to use.
+
+You can go ahead and use it.
+
+Airflow setting by default.
+
+If you want to.
+
+Probably go ahead and write any connections over here.
+
+So here you will be able to set it up okay.
+
+We'll discuss more about it.
+
+Then you have this requirement dot txt.
+
+If you want to install any libraries um then you can probably go ahead and write it over here.
+
+And this is my README.md file where you'll be able to see all the information.
+
+So I hope you like this particular video.
+
+Uh, this was it.
+
+Now in the upcoming video, I'm going to probably start everything from basics, and we'll try to do
+
+the coding and we'll will create task.
+
+We'll see what that Eskom is, how to create logs, how to probably go ahead and create a new Dag.
+
+Everything will discuss about it.
+
+Right.
+
+So yes, this was it from my side.
+
+I'll see you all in the next video.
+
+Thank.

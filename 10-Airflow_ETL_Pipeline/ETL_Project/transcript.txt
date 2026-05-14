@@ -1,0 +1,473 @@
+Okay, so two connections we need to set it up.
+
+One is for my API API because here we are calling one task id, here we are calling one connection id,
+
+and here also we are calling one connection ID right.
+
+Regarding Postgres connection.
+
+So two different connection needs to be started.
+
+So what I will do I will open my new terminal.
+
+And here I will just go ahead and write Astro Dev start.
+
+And this will probably start my entire Dockers.
+
+So here you will be able to see my Docker.
+
+Docker desktop needs to be opened over here okay.
+
+Right now nothing is running.
+
+Now here you can see new Docker container has started.
+
+I have my Postgres.
+
+I have my trigger ETL pipeline.
+
+Everything is basically running and soon my airflow will also be running as the Docker container will
+
+get started.
+
+Okay, so here you can see my air flow is starting up.
+
+Now suddenly I should be able to get my localhost which is running in 8080.
+
+Okay, so let's wait till these things happen.
+
+Till then I can also see my Docker desktop if you want.
+
+So right now let's see.
+
+It is going to take some time right.
+
+Once this is running automatically your browser should open.
+
+Otherwise you can directly go ahead and it.
+
+So now it has started.
+
+Now here you can see that my airflow is there right.
+
+I will go ahead and write admin admin and I'll go ahead and sign in.
+
+This is the default password.
+
+Now here you can see this is my Dag right.
+
+NASA Apod Postgres.
+
+Now before I go ahead and run this there is something called as connections.
+
+So inside admin I have connections over here.
+
+Now if I go ahead and see my Docker desktop also here you are able to see all this information right.
+
+So here what I will do I will go ahead and add two different connection.
+
+Okay.
+
+And without this particular connection it will not work.
+
+So the first connection is your NASA underscore API.
+
+Why I'm writing this particular name.
+
+Because if you go ahead and see your browser right over here, see the connection name that is present
+
+over here, this connection is nothing but NASA underscore API.
+
+Okay.
+
+So this is your connection.
+
+You should remember, uh, what uh, now this particular connection I'm actually going to use, what
+
+is the connection type now in the connection type airflow.
+
+The best thing is that it supports multiple connection type from Azure to Google to HTTP to Postgres
+
+to power BI even you can use power BI over here.
+
+Here we are going to specifically use HTP okay.
+
+And uh it will ask for the information as host.
+
+Right.
+
+In the host we need to give the same API which we were basically calling right api.nasa.gov/gov.
+
+Okay, uh, inside the login information, I don't want any of this information right now because we
+
+are not going to provide any login.
+
+And the next thing will be that I will go ahead and copy and paste my API key.
+
+Now remember this is my API key that I got from the mail.
+
+So you go ahead and copy this same thing.
+
+Okay.
+
+So then you provide this particular connection and this will be the connection ID for this.
+
+And this same connection ID will be there in your code also.
+
+Okay.
+
+It needs to probably match.
+
+So this is the first connection that I have to create.
+
+The second connection is with respect to my uh Postgres.
+
+Right.
+
+And the name if you remember we also use something like my Postgres connection.
+
+So let me just go ahead and show it to you.
+
+In the ETL pipeline, we had created this particular connection that is my underscore Postgres underscore
+
+connection okay.
+
+And if I go ahead and see in the docker compose my Postgres user is Postgres, then password is Postgres
+
+and Postgres underscore DB is also Postgres.
+
+So first of all I will go ahead and select my connection type.
+
+So here you will be able to see there is something called as Postgres.
+
+We have to select this okay.
+
+Now this is really important what host we really need to select for Postgres.
+
+So if you go over here, if you see that Postgres is running inside your Docker, right inside as a
+
+container.
+
+So just go ahead and click on this.
+
+This will be the name of the Postgres container.
+
+Okay.
+
+So you have to select this particular name.
+
+Okay.
+
+So see I'll again show you the steps.
+
+So here my Postgres is running.
+
+If you double click on this or if you just click one time you'll be able to see this name.
+
+You have to use this particular name because this is where it is running.
+
+So here I will set that to my host.
+
+Then my password will be nothing but Postgres.
+
+My login will be Postgres because the database name I've set it as Postgres.
+
+My password will also be Postgres.
+
+So all these three information are set up in my docker compose.
+
+Then finally I need to provide my port.
+
+My port was 5432.
+
+If you remember again in the docker compose it is given right?
+
+So this was my host port and this is my docker container port.
+
+Right.
+
+And from this I will be referring to this okay.
+
+So all this information has been set.
+
+If I go down I will go ahead and save it.
+
+Now this is done.
+
+Both my connection has been created.
+
+Now I'll go to my Dag and let's see whether this will run or not.
+
+So I'll go to my Dag and then I will go ahead and execute it.
+
+Now see?
+
+So inside this Dag, you will be able to see that the schedule is daily.
+
+Now I'll just go ahead and click on run.
+
+I hope so, it should run.
+
+Let's see.
+
+Now this is in green stage.
+
+Perfect.
+
+Green stage.
+
+Green stage.
+
+Green stage.
+
+Previously you may be thinking, Krish, why this red is coming?
+
+Because I had run it long back just a while back.
+
+So there I was facing some issues.
+
+But right now we have followed all the steps.
+
+Now let's go inside this.
+
+First of all I'll go to the graph.
+
+So this is my create table.
+
+Extract a pod transform and load data to Postgres okay so inside my create table here you will be able
+
+to see what is the logs.
+
+So here you can see that the table is basically getting created and all the logs looks good right.
+
+Then if I go back to my graph over here you'll be able to see extract a pod.
+
+And if I go ahead and see the logs here you'll be able to see retriever connection NASA API.
+
+Right.
+
+And here somewhere I think you should also be able to see the information.
+
+But right now it's okay.
+
+In this calm sea, in the scheme, I am able to get the entire information right.
+
+Since we have used the task and this entire thing is basically coming from the API, which is our extract
+
+and extract pipeline, right?
+
+So this you have actually got it.
+
+Now if I go back to my graph, if I say transform or transform underscore pod, if I see in the x comm
+
+again, this is the transformation that I've actually done to probably get it in the form of JSON.
+
+Then finally load data to Postgres.
+
+You'll be able to see I will be able to see some logs.
+
+Not a comment.
+
+All these things is going rows affected one rows affected.
+
+See it shows rows affected one.
+
+That basically means one row is inserted.
+
+Okay, now you should be thinking Krish, where does Postgres run?
+
+Over here.
+
+Don't worry, I'll show you that how?
+
+You can probably go ahead and see the data inside the Postgres.
+
+Obviously it is running inside a docker container, so you cannot directly open this URL.
+
+See, if I go back to my container here, my Postgres is running in this URL.
+
+If I just go and open this, it will not open.
+
+So in order to connect to the Postgres we require db viewer.
+
+Okay.
+
+So what you do is that at the end of this step please go ahead and download DB viewer.
+
+Okay so search for DB or download and you just go ahead and download this community one.
+
+Okay so download DB viewer.
+
+Okay.
+
+Dbeaver.
+
+Uh dbeaver.
+
+You have to download either you can download it for windows, you can download it for Mac OS or Linux.
+
+Right.
+
+Just download that particular installer.
+
+Double click it and install it.
+
+Okay.
+
+So once you install it you'll be able to see something like this right.
+
+I will talk about this.
+
+Let's let's delete this connection.
+
+Okay.
+
+Let's delete this connection.
+
+Now let me do one thing.
+
+Let me just go ahead and show you.
+
+Once you download it you'll be able to get this DB server.
+
+Okay.
+
+Then uh go to your database click on New Database connection.
+
+So the best thing about DB Dbeaver is that it will allow you to connect to different different types
+
+of database.
+
+See from OCN to MySQL, Google Cloud, CSV, Postgres.
+
+So right now our SQL is nothing but Postgres.
+
+I will go ahead and select this.
+
+Now it is asking me this localhost Postgres Postgres.
+
+See by default some basic information is over here.
+
+The port is also right now from my local my host.
+
+I have to probably use the same port because this is going to interact with the docker container.
+
+So what I have to do write localhost 5432.
+
+Database name is Postgres.
+
+As we have set up this is also Postgres.
+
+My password is also Postgres.
+
+Okay.
+
+Then we'll go ahead and test the connection.
+
+So testing the connection is giving you the entire correct result.
+
+It is saying connected.
+
+So I'll click on okay.
+
+Now I'll go ahead and click on finish okay.
+
+Now as soon as you go ahead and click on finish.
+
+Now see inside database, inside Postgres inside schema there is something called as tables.
+
+And if I see inside table there is something called as a port underscore data.
+
+And this is the information that has been triggered and that has been uh inserted.
+
+Right.
+
+So here you can see this entire information if you probably want to, uh, run this.
+
+Let me see over here.
+
+You have an option to open a SQL script.
+
+Okay.
+
+And let's zoom in.
+
+If possible, I will just go ahead and write select star from upward underscore data.
+
+Now let's execute it.
+
+Control enter.
+
+So here you can see my one record is basically coming.
+
+Now as soon as I go ahead and again execute this that basically means my second record will get inserted.
+
+I know the same record will get inserted so all the steps will run okay.
+
+Now again to verify it, whether the data is going inside my DB from in my Postgres, I will just go
+
+ahead and execute this.
+
+Now here you can see my second record is also updated here.
+
+The data is same, but here we are able to verify each and everything that it is working absolutely
+
+fine.
+
+Right.
+
+And now this ETL pipeline can be scheduled any number of time.
+
+Now here we have anyhow scheduled that it will run daily and almost we have completed the entire ETL
+
+pipeline.
+
+This was a amazing project altogether I guess.
+
+I hope you are able to do this.
+
+Now, what I'm actually going to do is that always make sure that after you run this, go back again
+
+to your kernel terminal.
+
+If you're not using it, just make sure that you stop it.
+
+Okay.
+
+So just go ahead and stop this Astro dev, stop now all my container will get stopped and automatically
+
+I will be able to run things.
+
+So this is how the entire ETL pipeline is created.
+
+Now, the best thing over here is that whenever you saw the connections right in that connection, if
+
+you are going to the cloud right, you can change that connection directly, right?
+
+You can you can give the cloud connection over there.
+
+The username password will be almost same thing.
+
+The host will only be changing connection ID name.
+
+You are able to create.
+
+Right.
+
+So that way you that is the reason why airflow is really important.
+
+And it can be run as a Docker container anywhere.
+
+Okay, so I hope you like this particular video.
+
+This was all about this particular project.
+
+There is one more upcoming project in airflow where we are completely going to implement a data science
+
+project, including the ETL pipeline.
+
+So yes, this was it from my side.
+
+I'll see you in the next video.
+
+Thank you.

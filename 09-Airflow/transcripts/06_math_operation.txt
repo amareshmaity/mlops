@@ -1,0 +1,819 @@
+Hello guys.
+
+So we are going to continue the discussion with respect to airflow.
+
+Now in this example, uh, I will be showing you some sequence of mathematical operations that I'm actually
+
+going to perform.
+
+And one operation will be dependent on the other operation.
+
+So we will try to go ahead and write the code.
+
+We will create a Dag will define all this particular task.
+
+And we will also use a feature which is called as Eskom.
+
+Okay.
+
+And what exactly that Eskom is.
+
+We'll discuss about it.
+
+Okay.
+
+So what I will do again inside my DAGs folder I will go ahead and create one more file.
+
+I'll say maths underscore operation dot p y.
+
+Okay.
+
+Now inside this particular file, what we are really going to do is that I will perform something.
+
+Okay.
+
+And let me just go ahead and write down the task.
+
+What all things I'm actually going to perform.
+
+Okay.
+
+So here what I will do, I will just go ahead and write multi-line comments okay.
+
+And here it is.
+
+So here you can see that we will define a Dag where the tasks are as follows.
+
+First of all, we'll start with an initial number.
+
+Okay, let's say example ten.
+
+Then we'll add five to the number.
+
+Then we'll multiply the result by two.
+
+Then we will subtract three from the result.
+
+And then we'll compute the square of the result.
+
+So here I know this example looks very simple.
+
+Why I have to probably go ahead and create an Dag with the help of airflow.
+
+But this is just to talk about like how I can probably create this entire pipeline, you know.
+
+And the reason why I'm showing you this basic example, so that once we cover all these things, right,
+
+we will be working on an amazing end to end project in the airflow.
+
+And there all these things will specifically get repeated.
+
+We will be talking about a problem statement over there.
+
+We'll be talking about data ingestion and all.
+
+Okay.
+
+So it is necessary because I also want to cover one more topic which is called as task API, and that
+
+I will be discussing in the next video itself.
+
+Okay.
+
+Now in this particular scenario, if I want to perform all this kind of operations, how I really need
+
+to start and this will be very helpful for any person who is first time seeing airflow and all.
+
+Okay, so initially to start this entire project, what we will do is that we'll go ahead and import
+
+some of the libraries.
+
+So from airflow I'm going to go ahead and import Dag.
+
+Dag.
+
+Okay.
+
+So Dag I'm actually going to use again this will be helpful in creating our Dag with the name.
+
+Like what frequency.
+
+We really need to probably run this particular Dag along with that.
+
+What is the start date?
+
+All those kind of information I'll be putting over there.
+
+Then the second library that I'll be importing is from airflow operators.
+
+And here we are going to specifically take Python and we're going to import Python.
+
+Operator.
+
+Okay.
+
+So here also we are going to use Python operator to perform this particular task.
+
+Then from date time I'm going to go ahead and import my date time which will be required okay.
+
+And then let's go ahead and define a function for each task Okay.
+
+So first thing first is definition start number.
+
+Okay.
+
+Start start context.
+
+Okay I will talk about this why I'm defining this context.
+
+It's just like I'm providing some parameters.
+
+Okay.
+
+So this is my first function I will just go ahead and print something.
+
+Okay.
+
+Let's say the starting number that I really want to give is ten.
+
+Okay.
+
+So this is my first function.
+
+Don't worry I have to write lot of code over here.
+
+Okay.
+
+Still many lines of code needs to be written over here.
+
+And then the second operation that I'm going to probably say see in this my first task is nothing about
+
+it is basically start with an initial number ten.
+
+Okay.
+
+So here is my start number function.
+
+Okay.
+
+Then next I have to add five to the number.
+
+So here what I will do is that I'll create another function which is like add underscore five okay.
+
+And this particular function here also I'm going to give some parameter which is called as context.
+
+And this context will be responsible in providing the information or the output from this particular
+
+function to this.
+
+Right.
+
+Because there is a dependency.
+
+First I need to execute this particular function.
+
+Then I need to go ahead with this function.
+
+Right.
+
+So that is the reason I'm defining this context.
+
+And how to probably go ahead and pass each and every parameters.
+
+We'll discuss about it.
+
+Okay.
+
+Then here what I'm actually going to do is that I'll go ahead and write new underscore value is equal
+
+to I'll say hey let's consider one current underscore Val.
+
+Okay.
+
+And here we are going to just go ahead and add five.
+
+Now the question arises from where this current value will probably be coming right.
+
+The current value should be coming from here.
+
+Because in this start number I'm going to assign this particular value as ten.
+
+So for this I need to go ahead and define this context.
+
+So this context value that we are going to set is by using a very important function that is nothing
+
+but x com underscore push which is again provided by airflow.
+
+And this value, the reason we save it in that is that we so that we can share those values within the
+
+task.
+
+Okay.
+
+So let me just go ahead and set the context over here.
+
+So I will go ahead and name a context over here.
+
+Let's say the name of this context is T or some something.
+
+I'm just writing some keywords over here.
+
+From this particular context I will take this function which is called as s com underscore push.
+
+Okay.
+
+Now what this will basically do is that sorry I shouldn't write s com underscore push okay.
+
+Now what this function will do is that I will create a key okay.
+
+And let's say the key over here I'm going to define as the current underscore value okay.
+
+Current underscore value.
+
+So this current underscore value I will be assigning the value over here as ten okay I'll just go ahead
+
+and hard code it for right now.
+
+And then we will go ahead and print this.
+
+Whenever we print this this is going to get saved in the log information when we are running the entire
+
+Dag.
+
+Now what this is basically doing is that in this related context, I'm setting the value of the current
+
+value to ten.
+
+Okay, now you can see that I have defined current value over here, but I need to have that particular
+
+current value right in my next function.
+
+So in order to get this particular value in the next function I will go ahead and write current value
+
+is equal to context t okay dot.
+
+Again I will be using this s function.
+
+Instead of writing s comm under push we will write s form underscore pull right.
+
+And here we are going to define our key which will be my current underscore value okay.
+
+Again the key with what key name I have actually defined on the top it is current underscore value with
+
+pull.
+
+Also I'm actually using this particular key.
+
+And then I will be having this task underscore IDs is equal to.
+
+Let's say I will go ahead and define my task ID that is start underscore task okay.
+
+Now you'll just understand it I'm defining some IDs also over here I am I'm when I'm pulling this particular
+
+information whatever is the recent value with respect to the current value that I'm actually going to
+
+get.
+
+Okay.
+
+And this is going to get saved over here.
+
+Now what I'm actually going to do whatever my new value is.
+
+Uh, it is nothing but the current value plus five.
+
+Now, what I'll do after I get the new value again, I have to probably go ahead and set the current
+
+value to this new value values.
+
+Right.
+
+So here what I will do I will again copy this entirety.
+
+Copy this.
+
+Okay.
+
+And this time I'll paste it over here.
+
+And instead of writing values equal to ten I will go ahead and write new underscore value.
+
+So based on this operations that you'll be seeing I started with the initial number ten.
+
+I saved this by using this s underscore com underscore push sorry x comma underscore push.
+
+And the key is nothing but current underscore value.
+
+Right.
+
+And then we are adding five to the number okay.
+
+And then we are multiplying.
+
+The next thing is that we have to multiply by two.
+
+But this after adding the number five to the number I'm getting a new value.
+
+And that new value is over here okay.
+
+Then we will go ahead and define another function.
+
+This time my function is nothing but multiply underscore by underscore two.
+
+Okay, which is nothing but star underscore context.
+
+Current underscore value is equal to context t dot x comma underscore pull.
+
+Again I have to pull that particular key.
+
+That key along with the task ID start task because I will get the recent value of the new or whatever
+
+the current value is assigned to.
+
+It is nothing but this new value, right?
+
+And after getting this particular value, I will just go ahead and perform whatever operation I want.
+
+So I will go ahead and define my new value is equal to current value multiplied by two.
+
+Yeah I'm doing that particular multiplication operation.
+
+Then again what I really need to do I need to do the push.
+
+Now after doing this push, also, I will just go ahead and print or I'll say, hey, I will use an
+
+F string and I'll say, hey, Add five and we are adding five to the current value.
+
+Okay.
+
+Now inside this particular value I am basically adding it.
+
+And I'm displaying plus five is equal to.
+
+It is nothing.
+
+But I'm saying hey this is my new value itself.
+
+Okay.
+
+So I'm just defining like this so that I'll be able to print some information over there.
+
+Then my new value is again getting multiplied.
+
+The current value is getting multiplied by two.
+
+Then after that, I will again be pushing this new value to my same context by using this s underscore
+
+comp x comma underscore push.
+
+This is a function and this entire value is also will be able to see.
+
+And the best thing is that from this particular function I can even convert all this key values into
+
+JSON also.
+
+Okay.
+
+Don't worry, we'll discuss as we go ahead and see an end to end project.
+
+This is still basics.
+
+I really need to make you understand about the fundamental concepts.
+
+Then only you will be very much familiar once we probably go ahead and start our entire project.
+
+Okay, now multiply by two is done.
+
+Now we'll subtract the three from result.
+
+Now, in order to again subtract three from the result, you should probably go ahead and write the
+
+definition.
+
+Do one thing that pause the video.
+
+Try to write down the definition.
+
+I'll give you five seconds.
+
+Just pause it.
+
+Uh, write down the entire code and come for the subtract subtract by three.
+
+So again here I'm setting the context.
+
+I'm pulling the context from the current value.
+
+This time I'm giving a new task id which is called as multi task.
+
+Okay.
+
+Uh here also I can define a other task like add underscore five underscore task.
+
+It is good to give a different task IDs for this.
+
+And this time it is multiply by two same operation.
+
+Sorry it should not be multiply by two.
+
+It should be.
+
+Okay.
+
+So this is add underscore five tasks.
+
+Uh first one is add five okay.
+
+One thing that I forgot to talk about it when we are calling this right we need to probably go ahead
+
+and call this task ID considering the previous task.
+
+So here we have mentioned task ID as task start underscore task multiply by two.
+
+And we are basically doing right over here.
+
+I can basically go ahead and say hey add underscore underscore task which is related to this.
+
+And similarly once I am doing multiply by two that basically means I'm giving the previous task information
+
+over here.
+
+So this task ID is nothing, but it is just an indication saying that whatever is the output of this
+
+particular function that is basically represented by this task ID okay.
+
+So that is just a naming convention I have specifically used over here.
+
+The final function, what I will do since I have also defined subtract underscore three.
+
+So in the next task I need to do the square.
+
+So again I will take the current value.
+
+Here I have given a task ID which is representing the previous one.
+
+This ID you can name it.
+
+Anyhow it is not a fixed like you have to name it like this.
+
+Only then I am doing the square operation and finally we are going to print this.
+
+Okay, so here we have defined this five different task.
+
+Now in the upcoming video you know I will also be talking about task API.
+
+But before this, let's go ahead and run it.
+
+Now let's define the Dag.
+
+Okay.
+
+Let's define the Dag.
+
+Now with respect to Dag, I just have to write with Dag.
+
+And once we go ahead and write this okay.
+
+First parameter is nothing but my dag underscore id.
+
+Uh, here I will just go ahead and write maths underscore sequence underscore dag.
+
+So this will be my first parameter that I will be specifically writing.
+
+Then start underscore date is equal to date time.
+
+Uh let's say I'm going to go ahead and start from 2023 first Jan okay.
+
+So this will basically be my date coming to the next one.
+
+Schedule underscore interval at the rate once okay.
+
+Uh once this is done then we go to the next one okay.
+
+This we are just saying that hey go ahead and run it at once.
+
+Like once in a day.
+
+Uh, once or just run it not once.
+
+Like you have to just run it one at a time.
+
+Okay.
+
+Um, unless I trigger it.
+
+Okay.
+
+If I go ahead and write weekly, this is basically weekly.
+
+We need to run it.
+
+Okay?
+
+So catch up.
+
+Uh, is equal to false over here.
+
+I will go ahead and set it up.
+
+Okay.
+
+And then once we create this, we will also go ahead and create a small variable called as tag which
+
+is representing this entire tag.
+
+Now here we are going to go ahead and define the task.
+
+I know the task is already defined, but we need to include this inside a Python operator.
+
+So we'll go ahead and write task underscore start underscore task.
+
+And here I'm going to go ahead and write my Python operator.
+
+Uh, again the reason I created the task ID because that Python operator that I'm actually creating,
+
+right.
+
+In the previous example, you could also see we did not uh, we called this task ID, right?
+
+This task ID was defined over here.
+
+But in this case, as you all know, we need to probably the start underscore task is representing add
+
+underscore five.
+
+So whatever what we do right with respect to the Python operator let's say that the start task is there.
+
+I need to map the task ID with this okay.
+
+So that this function will automatically understand which task ID to use.
+
+Okay.
+
+So here you will be able to see that okay.
+
+And uh please make sure that you understand it very much clearly each and every step.
+
+Because once we go ahead and probably work on a bigger project, it will be a much more, little bit
+
+more difficult when compared to this.
+
+Okay, so here I will be having my task underscore ID which is nothing but start underscore task.
+
+Okay.
+
+Then my next parameter is nothing but python underscore callable Python underscore callable.
+
+And when I say Python underscore callable I have to write my function name.
+
+So this is basically my function name that is start number.
+
+And then since I have already created the context, I will also go ahead and say provide underscore
+
+context which is one parameter is equal to true.
+
+When we say provide underscore context.
+
+That basically means this Xcom, right?
+
+This will be responsible in providing context from one task to the other task.
+
+Okay.
+
+So this is one of the task that we have specifically defined.
+
+Okay.
+
+Start task.
+
+Then let's go ahead and define my next task.
+
+That is nothing but add underscore five underscore task.
+
+So here you can see start underscore task add underscore five underscore task.
+
+It should be of the same name right.
+
+So here you will be able to see all these names will be also be given same.
+
+Right.
+
+Then you have this task ID add underscore underscore task.
+
+Please make sure that you have the same name.
+
+It is good to have okay so that you will not have any confusion then Python callable function is nothing
+
+but add underscore five and provide underscore context is equal to true okay.
+
+Similarly, multiply by two, subtract by two.
+
+Everything will be same like how we have written inside that multiply by two.
+
+Uh task id is multiply by two task okay.
+
+Then Python callable is multiply by two function provide context is true.
+
+Subtract again subtract three task subtract.
+
+Underscore three is the function that I'm actually going to use over here.
+
+And finally you have the square number task which is again a Python operator.
+
+The reason we are using a Python operator because we know that right.
+
+It is a Python function in short.
+
+Okay.
+
+Now once we define all this Python operator, in short, we are defining the task.
+
+Once we are defining this task, the task functionality is present.
+
+Inside this the context is basically setting.
+
+And based on this particular context and task ID, we are able to pass the information from one task
+
+to the other task.
+
+Okay, so finally this is done.
+
+Now let's go do one thing.
+
+Let's go ahead and set the dependencies okay.
+
+Now in order to set the dependencies I will go ahead and write start underscore task.
+
+The first task is this one.
+
+I'll go and run it.
+
+The second task is nothing but my ad underscore five underscore task.
+
+And the third task is nothing but my multiply by two task.
+
+And the fourth task is nothing but subtract three underscore task.
+
+And my final task is nothing but square number task.
+
+Okay, so all this particular task is basically over here.
+
+One by one we know how to execute it.
+
+Uh, we have written our entire code.
+
+This will be really, really handy.
+
+Trust me.
+
+Guys, please make sure that you solve this particular problem and try to run it.
+
+Okay, now I'll go back to my terminal.
+
+And once I probably go back to my terminal from here, what I'll do I will write Astro Dev start.
+
+Right.
+
+So once I execute this, my entire Docker container will start building again.
+
+So here you can see Postgres trigger scheduler web server.
+
+Um, when we are doing our end to end project, I will talk more about Postgres scheduler and all.
+
+Don't worry.
+
+But right now I'm just focusing more on the server part, right?
+
+Now inside this particular server we will go ahead and start working on this.
+
+Okay.
+
+And then you'll be able to see this.
+
+So this is going to take some time to run the airflow because Docker container is basically getting
+
+started.
+
+So if I go ahead and open this Docker container, your Docker desktop needs to be started.
+
+Then only it will be working.
+
+Okay, so finally here you can see that my airflow is now visible.
+
+My browser has come up.
+
+Okay, now with respect to this particular browser you'll be able to see this, uh, math sequence.
+
+Dag was my pipeline name.
+
+Okay.
+
+Now here you can see start task add underscore five task everything.
+
+So once I go ahead and start it.
+
+So here you can see my operation has actually started and this has got executed right.
+
+And if I probably go ahead and see the graph.
+
+So here you can see start task.
+
+So let's see this start ad.
+
+Everything is there.
+
+So if I go ahead and click on start you will be also able to see the logs.
+
+Here you can see the printing is basically happening.
+
+Starting number is equal to ten.
+
+Now if I go ahead and see in the x comm the current value is ten.
+
+Now see this information is getting passed from one task to the other.
+
+Pass right now after a start task, if I go ahead and click on add underscore.
+
+Five underscore task.
+
+So if I go ahead and see the logs here add five is equal to ten plus five is equal to 15 is basically
+
+getting displayed.
+
+And if I go and see in the x 15 value is getting updated over here.
+
+Right.
+
+And similarly if I go ahead and see in the graph multiply by two task is over here.
+
+If I go ahead and see the logs here, you can see multiply two by by two, which is nothing but 15 multiplied
+
+by two, which is nothing but 30.
+
+If I go ahead and see in the Eskom my my new value instead of 15, now I have 30 and then you have the
+
+subtract three underscore task.
+
+Here.
+
+Also you can see the Eskom value.
+
+Even you can see the logs.
+
+It is nothing but 30 minus three.
+
+And finally when you are doing the square number task here you can see the Eskom value.
+
+No Eskom value because I did not save anything.
+
+But in the logs you can see that 27 square is nothing but 729.
+
+So all these operations have executed step by step, and we are able to see that in a form of a pipeline.
+
+This has got entirely triggered and it is running efficiently.
+
+Right.
+
+And that is all about ML pipeline, you know, at the end of the day, ML pipeline is also created in
+
+this way.
+
+Yeah, I did not talk about like how we can interact with the database because see, everything will
+
+be working in different, different containers and those containers will be communicating with each
+
+other that I will show you.
+
+Okay.
+
+But this basic things you really need to cover right now I'm also going to cover one more topic which
+
+is called as task API.
+
+Okay.
+
+Right now we have just created task by defining this particular function and by using this Python operator.
+
+But if you see the recent update on airflow creating task has become very much easy.
+
+We just need to use a decorator, which is called as add the rate task.
+
+And that is what I'm actually going to show you in the next video.
+
+Now what I will do till then, I will just go ahead and stop this entire thing.
+
+Okay.
+
+So once I stop it, uh, my all the docker docker container will get stopped.
+
+So I hope you like this particular operation.
+
+I hope you like this particular code that we have specifically written for this maths operation.
+
+And in the next video we are going to discuss about the task API.
+
+So yes, this was it from my side.
+
+I'll see you in the next video.
+
+Thank you.

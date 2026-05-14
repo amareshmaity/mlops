@@ -1,0 +1,11 @@
+mlflow
+ipykernel
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+tensorflow
+keras
+hyperopt
+dvc

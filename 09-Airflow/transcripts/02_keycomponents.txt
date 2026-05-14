@@ -1,0 +1,281 @@
+Hello guys.
+
+So we are going to continue the discussion with respect to Apache Airflow.
+
+Already in our previous videos, we have understood about the life cycle of a data science project and
+
+how Apache Airflow will be useful for a data engineer and for a data scientist.
+
+In this video, I'm going to discuss about the key concepts some of the very important key concepts
+
+in Apache Airflow, which everybody needs to know before we start the practical implementation.
+
+So the key concept, the first key concept that is actually used most commonly in Apache Airflow is
+
+something called as Dag.
+
+So Dag is nothing but directed acyclic graph.
+
+So let me go ahead and discuss more about this.
+
+Now in the case of directed acyclic graph, what exactly it is here I can write Dag is a collection
+
+of it is nothing, but it is a collection of task.
+
+Okay.
+
+It is a collection of task that you want to schedule.
+
+And run okay.
+
+That you basically want to schedule and run.
+
+So this is nothing but a collection of tasks that you want to schedule and run.
+
+So here whenever I talk about Dag, you know, and let's say that if I just consider over here this
+
+as an example, the life cycle of a data science project, data ingestion, feature engineering, feature
+
+selection.
+
+These all are independent modules.
+
+And we can consider this all as specific task.
+
+Okay.
+
+Let's say that I have multiple tasks over here.
+
+Let's say this is my task one.
+
+Uh, this is my task a this is my task B okay.
+
+And this is my task C.
+
+Now in this scenario, okay, in a directed acyclic graph, it is nothing, but it is a combination
+
+of task.
+
+You will be having some collection of task itself.
+
+And that is what is my second key component.
+
+So if I really want to go ahead and write over here.
+
+So I will also go ahead and define about tasks okay.
+
+So which is my second key component.
+
+So here task represent
+
+represent the individual.
+
+Units of study.
+
+Unit of work.
+
+Unit of work in a Dag.
+
+Okay.
+
+And this task can be anything, right?
+
+Now, let's say if I probably consider in the life cycle of a data science project, feature engineering
+
+can be one task.
+
+My data ingestion can be one task.
+
+Right.
+
+And we need to probably go ahead and schedule and run this specific task.
+
+Now in Dag, there are two more important key concept that everybody should know.
+
+Right.
+
+And with respect to all this particular task, if I probably talk about Dag.
+
+Right, I can also say this as a directed graph.
+
+So this Dag is nothing.
+
+But we can also mention this as something called as directed graph.
+
+Directed graph basically means we are giving some direction for this particular graph.
+
+Let's say if I have all this task in this directed way, let's say this is my task a this is my task
+
+B this is my task C this basically shows the flow in which the task needs to be executed.
+
+So first my task A needs to be executed.
+
+Then B will be having a dependency on A, then B will get executed.
+
+Then finally C is basically getting executed.
+
+Okay, so each Dag is a directed graph, meaning that the flow of tasks has a direction from one task
+
+to the another task, and it is acyclic okay.
+
+So there are main two core properties over here.
+
+One is directed okay.
+
+And the second core property is nothing but acyclic.
+
+Now whenever I talk about directed, directed basically means task, must have a task, must have a
+
+specific sequence, must have a specific sequence okay.
+
+Whereas in the case of acyclic, as the name says, acyclic as the name says acyclic, it is just like
+
+no tasks should depend on itself.
+
+Like C should not be dependent on itself.
+
+They should not be this kind of task.
+
+Okay.
+
+It can be C to a, a to b, b to C, but it cannot be c to C or b to B, or a to A.
+
+Okay.
+
+So that kind of graph should not be available right.
+
+So then only we basically say it as directed acyclic graph.
+
+Okay.
+
+It should be acyclic.
+
+Okay.
+
+Uh here I will just go ahead and write.
+
+No task should be should be dependent or should be depend on itself.
+
+Okay.
+
+And if I talk about this Dag, you know, these are basically called as nodes.
+
+Nodes represent a task.
+
+Edges represents a direction.
+
+Okay.
+
+The direction can also be reversed.
+
+So here the direction is basically represented something like this.
+
+Also a b and c.
+
+That basically means first a is executed then B is executed, then C is executed.
+
+If this was to be said in the reverse direction I could have written like this okay.
+
+The task of execution.
+
+Now coming to the second component, as I have already told about, right?
+
+This task, it represents a individual unit of work in a dag, uh, in an air flow.
+
+A task can be anything.
+
+So this can be specifically anything.
+
+It can be a Python function, right?
+
+It can be a Python function.
+
+We'll discuss about all these things.
+
+It can probably be a querying a database right.
+
+We can query a database in inside this particular task.
+
+It can be querying a database.
+
+Third can be it can be like sending an HTTP request.
+
+Right.
+
+It can be any kind of task that we can probably define over here.
+
+So we will be seeing multiple examples.
+
+And as we go ahead with respect to this.
+
+Now the third important property or third key component is something called as dependency.
+
+Okay.
+
+Dependencies.
+
+Now for dependencies.
+
+Uh, it's just like you need to know this.
+
+So please make sure to know this, but I will show you this all in the practical terms.
+
+Okay.
+
+So in dependencies I have defined some definition task in Dag have dependencies.
+
+So let me make this as another color so that you will have enjoy watching it okay.
+
+So task in Dag have dependencies, meaning one task might need to finish before the another task can
+
+start.
+
+This dependency allows you to control the order in which tasks are executed.
+
+Airflow provides a mechanism like set upstream and set downstream to define this dependencies between
+
+tasks.
+
+So this.
+
+As we go ahead we'll be discussing uh, but these are the main key components which everybody needs
+
+to know about what is directed acyclic graph.
+
+Because while we are defining all our tasks, you know, we need, uh, it is nothing, but it is having
+
+basically a collection of tasks that you want to schedule and run.
+
+Right.
+
+And when we say there are two main important properties over here, directed and acyclic, these two
+
+properties will be followed by this, uh, directed acyclic graph.
+
+And then we'll be having task.
+
+Task represents the individual unit of work in a graph Dag.
+
+So just consider this right.
+
+Every module will be defined as a task.
+
+And we can schedule this you know with the help of Apache Airflow.
+
+So I hope you like this particular video.
+
+Uh, as we go ahead we are going to discuss more things.
+
+Uh, in the next video, we are going to go ahead and take one more step and try to understand why Apache
+
+Airflow Way is useful for MLOps.
+
+Okay.
+
+And that is what we will be discussing in the next video.
+
+So yes, this was it from my side.
+
+I'll see you in the next video.
+
+Thank you.

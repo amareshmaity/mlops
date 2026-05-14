@@ -1,0 +1,561 @@
+Hello guys.
+
+So we are going to continue the discussion with respect to airflow.
+
+In this tutorial we are going to just see one good example.
+
+And this will exactly give you an idea like how you can get started with airflow with respect to practical
+
+implementation.
+
+So already you have seen this example dag dot pi.
+
+I will not write any code over here.
+
+Instead what I'll do, I'll go inside my dags folder and I will create a new file.
+
+And let's say this file name will be ML pipeline dot Pi.
+
+Okay.
+
+So this will basically be my file over here.
+
+And here I'm going to probably go ahead and create my Dag, my task and many more things.
+
+Now as I said, I'm going to create a basic ML pipeline.
+
+And I'll not probably go ahead and define what kind of functionality it is basically going to do.
+
+But instead we will go ahead and discuss about a basic skeleton, that how you can go ahead and create
+
+the task, how you can go ahead and create your Dag, you know, and how you can probably go ahead and
+
+run this.
+
+Okay.
+
+So first of all, what I will do.
+
+I will go ahead and write from airflow.
+
+I'm going to go ahead and import Dag.
+
+Okay.
+
+So this is the first thing that I will be using.
+
+So from airflow I'm going to import Dag.
+
+Then I'm going to go to from airflow dot operators on dot Python okay I'm going to also import something
+
+called as Python operator.
+
+I will talk more about this Python operator and why exactly it is used.
+
+This is just used to define a task based on a Python function.
+
+Okay.
+
+Some type of task which is basically a Python function in short.
+
+Okay, so that is the reason I'm importing Python.
+
+Operator.
+
+You also have different kind of operators which we will discuss as we go ahead.
+
+Then I'm going to go ahead and import from date time.
+
+Let's go ahead and import date time okay.
+
+Now once we specifically go ahead and import all these three libraries.
+
+Now let's go ahead and define our task one okay.
+
+So define our task one.
+
+Because at the end of the day when we are creating Dag inside Dag, we need to have task which will
+
+be having dependencies which we will be displaying or specific like we will follow a specific flow from
+
+which task needs to be executed first and in what direction it really needs to be executed.
+
+Right.
+
+So what we will do is that we'll define our task one let's say that I go ahead and define a basic function
+
+which is like pre-process data.
+
+And let me go ahead and write one one print statement.
+
+Right now I'm not I'm not just going to go ahead and write any code in this pre-process data.
+
+You can go ahead and write anything.
+
+But right now I'll just show you by writing some information over here.
+
+Let me go ahead and write pre-processed data okay.
+
+And then let's go ahead and define our task two okay.
+
+Definition train underscore model okay.
+
+Now here I'm going to go ahead and print The training model over here.
+
+Right.
+
+So we are also going to go ahead and define our train.
+
+Define our task to.
+
+Then third thing that I'm going to do is that define our task three.
+
+Okay.
+
+So once we define our task uh, then I will be discussing about how we can go ahead and execute all
+
+the specific task in a specific order or in a directed graph itself.
+
+Right.
+
+So here I'm going to go ahead and create another function which will be like definition evaluate model.
+
+And this is how we entirely create a pipeline.
+
+Right.
+
+And later on we'll be seeing some amazing end to end projects again where we'll be writing all this
+
+particular code.
+
+Uh, these are just like Python function, and this Python operator will be responsible in executing
+
+this Python function, how it is going to happen.
+
+I'll just let you know in some time.
+
+Then we are going to go ahead and print evaluate models.
+
+Okay.
+
+Now evaluate models.
+
+Again three dots let's say.
+
+And all this print statement will also be there.
+
+Now the next step what we'll do after we define task.
+
+Over here we have defined three different tasks.
+
+We're going to define the Dag okay.
+
+Now for defining the Dag.
+
+What we will basically do is that I will go ahead and write with Dag.
+
+So this is how you go ahead and define a Dag.
+
+We have to use this keyword called as Dag with Dag.
+
+And the first name will be that.
+
+What will be your dag name.
+
+Okay.
+
+So here I will say ML underscore pipelines.
+
+Right.
+
+So this is my first parameter that is required the name of the Dag that we are going to use.
+
+Then the second one is like from which start date you want to specifically use it.
+
+Here I'm going to use date time.
+
+Let's say I want to go ahead and start this from 2420, 24.
+
+One comma one that is 1st January.
+
+And then I will probably go ahead and give the start date okay.
+
+The third parameter which is there which is called as scheduled interval.
+
+Now in the scheduled interval you can have different different values.
+
+You can have daily.
+
+You can have weekly uh And there are multiple options just to probably talk about how many different
+
+options are there.
+
+I will be discussing as we go ahead, but let's right now you have something like, uh, daily.
+
+You have weekly, like how, uh, how you really want to execute this entire pipeline.
+
+How many times you want to probably execute it.
+
+So that is what is basically set over here.
+
+So for this instance, I will just go ahead and write weekly because I want to execute this weekly okay.
+
+So I have my schedule interval over here.
+
+And then finally I will be writing as Dag.
+
+Okay.
+
+So this is how we are basically writing this and this is how we define our Dag itself.
+
+Okay.
+
+Now as soon as I write this I will press enter okay.
+
+And here we, we have to probably be inside this particular block okay.
+
+Inside this block.
+
+Inside the block that inside this dag block okay.
+
+So go over here and press enter.
+
+And now I will go ahead and define my task.
+
+In order to define the task I will create a variable.
+
+Let's say this is my pre-process okay.
+
+And let me give a comment over here.
+
+Define the task.
+
+Okay, so my first task is preprocess.
+
+Now for this preprocess I have to make sure that I have to execute this particular function.
+
+Okay.
+
+So for executing this particular function we will be using something called as Python operator.
+
+Similarly there are different types of operator.
+
+Uh don't worry we will be discussing as we'll be seeing multiple examples here.
+
+The first parameter is my task id.
+
+I need to specify some kind of task id which needs to be unique.
+
+So here I will go and give some name like pre-process underscore task okay.
+
+And then the next parameter is nothing but Python callable okay.
+
+Now inside this Python callable uh this parameter we really need to write the function which we really
+
+want to call.
+
+Right.
+
+So here we are basically going to call this pre-process data.
+
+Right.
+
+So this is what it is basically going to do.
+
+In short this is going to call the pre-process function.
+
+Don't use brackets over here.
+
+We just need to say Python callable.
+
+Since we are using Python operator it knows that this is a function.
+
+Okay, then the next task after preprocess is nothing but train.
+
+Let's say with respect to train over here I will again go ahead and use Python.
+
+Operator, let me go ahead and give my task underscore id and inside this task id I will go ahead and
+
+define my train underscore task.
+
+And then uh, this is nothing but python underscore callable okay.
+
+And in Python underscore callable it is nothing.
+
+But I'm going to call my function which is called as train model.
+
+Right.
+
+So this train model will be basically called over here.
+
+Now similarly going to my third one which is basically evaluate.
+
+So here I'm going to probably go ahead and define my evaluate okay.
+
+Now inside this evaluate I'm going to use this Python operator.
+
+My task ID will be nothing.
+
+But again it will be unique.
+
+I will go ahead and divide uh define it as evaluate task okay.
+
+And with this name, we will be able to even see when we are running that entire Dag.
+
+Right.
+
+And python is nothing but evaluate model.
+
+So this is the most basic way to probably create a Dag.
+
+Along with that Dag, I'm basically defining the task and all.
+
+Okay.
+
+Now the next step is that in which order we need to execute this.
+
+So here I'm going to basically go ahead and define my dependencies.
+
+Now inside this dependencies I'm going to go ahead and write pre-process.
+
+Uh, after pre-process I need to go ahead and execute my train okay.
+
+Train.
+
+So I will go ahead and execute this.
+
+Then we will go ahead and execute the evaluate.
+
+So this is how we specify the order uh by putting some dependencies over here.
+
+So in this in short is first of all going to take pre-process and execute then train then evaluate okay.
+
+So this is the most basic example of creating a Dag pipeline.
+
+Here I've created a ML pipeline.
+
+Here you can write any functions, but this will be executed in a specific order based on the dependencies
+
+that I have actually set.
+
+Now let me open my terminal.
+
+Let's see whether this is working fine.
+
+Okay, so this is my command prompt.
+
+I will just go ahead and say Astro Dev start.
+
+Okay.
+
+Once I probably go ahead and write this particular command and remember this entire project we have
+
+already created in our previous video.
+
+Right?
+
+How we have created.
+
+I have already told you.
+
+Now inside this DAGs only, I'm creating this ML pipeline dot p y.
+
+So a different Dag will basically get created.
+
+So let me just go ahead and write Astro Dev start.
+
+Now all my Docker files will get loaded and it is going to get executed.
+
+And here you will be able to see that airflow is starting up again.
+
+It is going to take some amount of time, but this time I'm going to get two different dag.
+
+One Dag is for the example dag dot p y.
+
+And if I probably see the name of this particular dag over here, it may be specified somewhere here
+
+itself.
+
+Okay.
+
+So here also see example.
+
+Extra notes is basically getting called.
+
+And please make sure that you have your Docker running.
+
+Okay.
+
+So this is my airflow.
+
+So here you can probably see that my airflow page has got started.
+
+Okay.
+
+Now I'll put admin and admin.
+
+Make sure to sign in okay.
+
+Uh with respect to this right.
+
+You'll also be able to see that you'll be able to use something called as connections.
+
+I'll talk more about this particular connections if you are using some other some other services like
+
+PostgreSQL in another Docker container, you can basically go ahead and write the connections itself.
+
+So here is my example.
+
+Astronauts that is created and your ML pipeline.
+
+Now this ML pipeline was my another folder file that is ML pipeline.py.
+
+There I had written this code.
+
+Now once I go inside this here you'll be able to see three different tasks right pre-process task train
+
+underscore task and evaluate underscore task.
+
+And if you also see the graph this is what is the order it is following.
+
+First pre-process task will get executed.
+
+Then train underscore task will get executed and evaluate underscore task will get executed.
+
+So if I go ahead and run this you will be able to see that this is running right?
+
+Okay.
+
+And you may be thinking, Chris, where did this come from?
+
+Because previously also I had run it.
+
+Okay.
+
+So it is just showing the previous information over here.
+
+So now let us let me show you one very important thing from this particular graph.
+
+Now say that pre-processed underscore task is executed successfully.
+
+If I probably see from the recent one this is all previous have already got executed.
+
+I had executed earlier.
+
+Okay, but if I hadn't seen pre-processed task right, let's say over here, over here, you'll be able
+
+to see something called as logs.
+
+Now, inside this logs you are able to see that hey, my info pre-processing data is got executed,
+
+right.
+
+So that basically means whatever things I had actually written in the code with respect to pre-processing
+
+data, this has got executed.
+
+Now what about the other one?
+
+If I go ahead and see in the train task okay.
+
+Here also you'll be able to see my training underscore model is basically getting displayed.
+
+And the thing that what we are seeing over here right.
+
+This is nothing.
+
+But this is my MLflow UI.
+
+Okay.
+
+Now in this MLflow UI, I will be able to see all my bags, I'll be able to see all the tasks.
+
+I'll be able to see even logs.
+
+I'm able to also see Xcom.
+
+Xcom basically means this is the parameter that is responsible.
+
+Let's say if I'm passing one parameter from this task to the other task, this will hold that particular
+
+information.
+
+Okay, as we go ahead, I'll be showing you multiple examples.
+
+Right now if I go to the last one that is evaluate model.
+
+So here also I'll be able to see this particular message.
+
+So I am able to see the graph.
+
+This graph is showing green color.
+
+That basically means it has got executed.
+
+If you also want to see the code the code is basically over here visible completely.
+
+If you want to see any kind of event logs, whether it is success running or not, you will be able
+
+to see over here, right?
+
+So I hope you are able to understand this specific video.
+
+I hope you're able to, uh, get the idea about how you can probably create a basic Dag and run it here.
+
+I had created something called as ML underscore pipeline.
+
+Now in my next video, I'll take one more simple example.
+
+And now let's write more code inside that particular function and see what all things we can basically
+
+do.
+
+How we can store the values inside this Xcom and all.
+
+We'll try to see.
+
+Okay.
+
+Always remember once you probably execute it, you want to stop this, right?
+
+So you can go again back to the terminal.
+
+And again instead of writing Astro Dev start, you can go ahead and write Astro Dev.
+
+Stop.
+
+Okay, so here you will be able to see that you are stopping it now and all the containers will get
+
+stopped.
+
+And now your airflow will not be working.
+
+Okay.
+
+If you again want to start it, you can.
+
+There is also one more thing.
+
+Let's say that my container is already running.
+
+Okay, I want to probably change some code and then I want to run this.
+
+So for this you can go ahead and write Astro Dev restart okay.
+
+You can just use this particular function and automatically your entire container will get restarted.
+
+So I hope you like this particular video.
+
+This was it.
+
+Now in the next video we will see one more example where we will create one more Dag pipeline.
+
+Uh, we will create one more Dag and then there I will start writing some information inside this particular
+
+function.
+
+So yes, this was it from my side.
+
+I'll see you in the next video.
+
+Thank.

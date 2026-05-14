@@ -1,0 +1,935 @@
+Hello guys.
+
+So finally we are going to take this entire ETL pipeline.
+
+And we are going to deploy this in the cloud.
+
+Now over here you will be able to see that we have used Astro okay.
+
+And when we are using Astro that is nothing but astronomer.
+
+Uh, it is a platform which basically manages the entire airflow.
+
+Right.
+
+And here you could see that we use something like Postgres.
+
+We, we we created task, you know, which was able to perform, extract, transform and load.
+
+Right.
+
+And along with this in the Docker compose we could see that, hey, my Postgres was also running in
+
+a Docker container.
+
+Fine.
+
+This is the working in the local right.
+
+But the main thing is that how should we proceed in making this specific deployment into the cloud?
+
+That is the major thing, and that is what is specifically asked in the interviews.
+
+As a as a MLOps engineer, you would definitely be interested about like how each and every project
+
+goes into the production.
+
+Right?
+
+So what I'm actually going to do is that in this particular video, I'm going to show you how you can
+
+proceed with the deployment, and we will follow a mechanism wherein we will use AWS and we'll use some
+
+other services also for the deployment purpose, so that you get a lot amount of idea.
+
+Now, as you all know, we have created this entire project with the help of astronomer.io.
+
+Okay.
+
+And this astronomer.io.
+
+What I will be doing is that, uh, this they also provide a entire cloud platform wherein you will
+
+be able to manage your entire airflow application.
+
+Now, you may be thinking, Christian, Chris, what about this Postgres sequel and all which we have
+
+actually used?
+
+Postgres can be created in AWS or any other kind of services can probably be created in AWS, and since
+
+everything is working in airflow, we can just go ahead and change the host.
+
+So if I probably go ahead and show you over here this I was running in my local right now inside this
+
+local, if I probably go ahead and open just my connection.
+
+Right.
+
+So let's say my Postgres connection was here.
+
+And here you can see that I've given some host right over here.
+
+And this host is basically my AWS host, okay.
+
+The AWS where I have actually hosted my database like Postgres database.
+
+Okay.
+
+And this particular Postgres database information or host I've actually given it over here.
+
+So what it is going to happen is that from my local, if I am executing, all the information is going
+
+to get stored in this particular database which is running in the AWS cloud.
+
+So overall, in this video I will be showing you how you can go ahead and set up this particular database
+
+of Postgres.
+
+Along with that, how you can probably take your entire application into the production itself.
+
+Okay, so let me just go ahead to the astronomer.io.
+
+The first step is that please go ahead and create your account.
+
+And the best thing is that astronomer.io.
+
+They also provides you a cloud platform wherein you will be able to deploy your entire airflow application,
+
+and they provide you somewhere around $300 credits.
+
+Also.
+
+Okay, if you are probably logging it for the first time.
+
+So I'll go ahead and click on login.
+
+Okay.
+
+I've already created an account, but let me just show you completely from start.
+
+So I'll go ahead and click on Get Started right now.
+
+Okay.
+
+And I will be using uh, one email ID, let's say a fresh email ID so that I show you everything from
+
+basic.
+
+So here you can see that I have already logged in.
+
+What I will do, I will just go ahead and log out from here.
+
+Okay.
+
+So let's see I will log out from this particular account.
+
+Okay.
+
+Now what I will do I will again log in with a new ID.
+
+Okay.
+
+So that you also start from the complete basics.
+
+So new login ID is 9046 at the rate gmail.com.
+
+So I'm just going to go ahead and click on continue.
+
+So once you probably go ahead and click on this.
+
+So you will be inside your cloud.astronomer.io.
+
+Okay.
+
+Now this is your, uh, Astro account.
+
+Your astro account has been created.
+
+Uh, let me keep this as a dark mode so that it looks good.
+
+Okay.
+
+And then, uh, you can probably go ahead and contact your administrator.
+
+Add an existing code if you're working for a company.
+
+Or I can just go ahead and see, uh, start a free astro trial.
+
+So I'll go ahead and create the organization.
+
+I'll say, hey, this is for my personal use.
+
+Okay.
+
+Uh, how familiar are you with Apache Flow?
+
+I think till now you are familiar.
+
+Pretty much familiar.
+
+Till the intermediate level, uh, personal learning and development.
+
+I will be selecting it.
+
+You can select anything as you like.
+
+Okay.
+
+Now, workspace name.
+
+I will just go ahead and say this is, uh, my data engineering or ETL team.
+
+Okay.
+
+So I will just go ahead and write ETL team okay.
+
+And I'll go ahead and click on continue.
+
+So once I give this entire information you also need to give this entire information okay.
+
+Now uh it is asking deploy your first Astro project.
+
+You can either deploy generative AI application.
+
+So it actually provides you with respect to vector embedding ETL learning flow and all.
+
+So I will just go ahead and skip this step because I will show you how the deployment can be done.
+
+Okay then review deployment.
+
+Create deployment in Astro.
+
+Let's say I will go ahead and select AWS internally okay I'll just go ahead and click on Create Deployment
+
+okay.
+
+Now I'll go to my deployment.
+
+So this is how it looks like.
+
+And everything over here.
+
+By default some image is basically getting deployed.
+
+Some base image is basically getting deployed okay.
+
+So I hope you are able to understand till here.
+
+Now the best thing is that you can deploy your first Dag even with the help of GitHub integration with
+
+Astro CLI.
+
+Um, all these steps I will probably show you directly with the help of Astro CLI.
+
+And you can also go ahead and directly deploy your Dag.
+
+Okay, so no healthy deployments found in the workspace.
+
+So right now we have not done any deployment.
+
+And if you also see over here nothing is running okay.
+
+Now let me do one thing.
+
+Let me just go back to my um project okay.
+
+So in order to do the deployment I will just go ahead and open my terminal from the command prompt.
+
+I will just go ahead and write.
+
+Uh, Astro.
+
+Astro login.
+
+Okay, so once I.
+
+Right.
+
+Astro login, uh, it will tell me to open a browser over here.
+
+See?
+
+Please enter to open the browser.
+
+So I will just go ahead and press enter.
+
+Automatically it will take the browser where I'm specifically working.
+
+And now I'll go ahead and continue with Google.
+
+I'll just go ahead and log in to my account, because I want to go ahead and deploy my Dag account or
+
+Dag application.
+
+So once I do this, I will just go ahead and say accept.
+
+Okay.
+
+It is asking me the Astro account access.
+
+And once this is done, I am good to go.
+
+Okay.
+
+Now once I give this particular access, the next command in order to deploy an entire application.
+
+Okay, over here that we have this, right, the entire ETL pipeline.
+
+All you have to do is then from the same working location, you just need to.
+
+Right.
+
+Astro deploy.
+
+Okay.
+
+So once you go ahead and write Astro Deploy here, you can see that it is saying select a deployment
+
+Astro project.
+
+I will just go ahead and select that number one.
+
+Okay I'll press enter.
+
+Now here you can see the entire building image is basically happening.
+
+The entire checking your back for errors.
+
+Everything is basically going over there okay.
+
+And this is the best thing over here.
+
+So one is passed.
+
+So here the all the deployment is specifically happening where all the images will be pushed and all
+
+installed.
+
+The environment is basically creating created over here.
+
+So if I just go ahead and see on Dax.
+
+So not yet I cannot see anything because I think the deployment may be happening.
+
+So if I go ahead and see in the deployments also.
+
+So here you can see some some image will be getting created.
+
+Uh, this is my base image.
+
+So once uh, you know that entire deployment will happen over here.
+
+So here you will be able to see the image okay.
+
+So this is the first step.
+
+So till that particular deployment is specifically happening we will wait.
+
+See over here it is showing waiting waiting waiting waiting and all okay.
+
+And here also you can see you have $300 credits in 14 days.
+
+Uh left in your trial Okay, now what I will do, I will go to my AWS console.
+
+Now, the thing is that Postgres, what astronomer does is that it does not provide you to probably
+
+create any platform like it does not provide you any feature to create a PostgreSQL over here, right?
+
+So what I will do is that I will go ahead and create a PostgreSQL over here.
+
+So for this I will be using the DS.
+
+DS basically means managed relational database services provided by AWS okay.
+
+And here what I will do I will just go ahead and click on DB instances and I'll start creating my new
+
+DB.
+
+So already a DB is available over here.
+
+Um, so I will be using this DB itself.
+
+Uh, the reason is very simple because uh, if I go ahead and create a database, it is going to take
+
+some amount of time.
+
+Okay.
+
+But I'll show you all the steps how you can probably go ahead and create it.
+
+So here I will go ahead and click on create a Database.
+
+So once I go ahead and click click on this.
+
+So it will ask me to probably go ahead and select one option.
+
+So I have created Standard Create.
+
+Along with this I will be using PostgreSQL and it will just select the engine version.
+
+So this is my engine version.
+
+Okay now it shows that template.
+
+What template you really want to select production or dev or test or free.
+
+I'll just go ahead and click on Free to air.
+
+Okay.
+
+And if I select this all options right.
+
+There are also different different options.
+
+Like you can go ahead and take a single DB instance.
+
+You can do Multi-az DB cluster.
+
+So there are a lot of features over here.
+
+Then this will be my DB instance identifier okay.
+
+Type a name over a db instance.
+
+So here you can actually see.
+
+Now master username you'll be able to see over here type a login ID for the master user of a database
+
+instance.
+
+So I will just go ahead and write Postgres.
+
+The reason why I'm writing Postgres over here.
+
+Because if you go ahead and see in my docker compose right.
+
+So here also we have just used postgres username, password and db.
+
+Okay, so here we are writing Postgres.
+
+Uh, then here also we'll go ahead and write Postgres.
+
+Okay.
+
+Here also we will go ahead and write Postgres.
+
+So with respect to the master password then uh here you can see that we are selecting an instance configuration.
+
+So this is like two version two Vcpu one GB Ram will be more than sufficient for our use.
+
+Case allocated storage is 20.
+
+Now if I go ahead and click on Advanced setting.
+
+So advanced settings also this is selected by default.
+
+Everything is selected.
+
+Uh one option that you see over here with respect to public access I will go ahead and select on this
+
+public access so that I am able to provide uh, because at the end of the day, I will be accessing
+
+from my server.
+
+Right.
+
+So that is the reason I'm giving over here.
+
+I don't need to select any proxy as such.
+
+Um, password authentication is over here.
+
+Uh, turn on performance insights seven days free tier.
+
+Okay.
+
+Let it be like this itself.
+
+Uh, and all the options are over here, right?
+
+So once you probably go ahead and select all the specific options you can, right?
+
+I feel that everything looks fine over here.
+
+Yeah.
+
+Good to go.
+
+Okay, then, uh, what I will do, I will just go ahead and click on create.
+
+Okay.
+
+So once you click on create, uh, you will be able to see that this kind of database will get created.
+
+But that DB identifier name was database two in my case.
+
+So I don't want to create it once again because I've just selected all the steps which you could also
+
+see step by step.
+
+Right.
+
+So now if I go inside the database one here, there will be something called as VC security groups.
+
+Okay.
+
+So you need to go ahead and click this okay.
+
+Uh after that after the database is basically getting created, then you need to probably go ahead and
+
+click on the security group ID.
+
+And there is a option which is called as Edit inbound rule.
+
+So in the edit inbound rule you have to add a rule right.
+
+So this rule will not be available over there.
+
+Okay.
+
+This rule will not be available over here.
+
+Right.
+
+So if I just delete it, you need to add a rule, uh, wherein you'll be able to select a Postgres.
+
+So here you'll be able to see PostgreSQL.
+
+By default the port is five, four, three two.
+
+Uh, here you'll be having custom anywhere, anywhere, anywhere like this.
+
+Right.
+
+All this specific options is basically there.
+
+Right.
+
+So, uh, what you really need to probably do is that you can just go ahead and select for custom and
+
+you can provide this access, uh, from anywhere.
+
+Right.
+
+So everybody should be able to access this okay.
+
+So this is the default selection that we can probably do it okay.
+
+So this is with respect to the inbound inbound rule right.
+
+So if you again see this over here you will be able to see it.
+
+Right.
+
+So custom is over here.
+
+Then you have this 0.0.0.
+
+And then you have selected all these things.
+
+So I think before we selected anywhere but it should be custom okay.
+
+It should be custom.
+
+So I'll just remove this once again If you see edit inbound rule PostgreSQL TCP okay protocol 5432.
+
+By default it will get selected.
+
+The source is custom and you have to select this particular IP.
+
+Just saying that hey, from the internet we will be able to access this particular SQL server okay PostgreSQL.
+
+Now once you do this uh, then uh, I will just go ahead and go to back and uh, let me just open my
+
+RDS database again.
+
+Okay.
+
+So this, uh, database provide almost access to different, different databases as you like.
+
+Okay.
+
+Then you can go inside the database user, and here you will be able to see something called as endpoint
+
+address.
+
+Okay.
+
+So you need to copy this endpoint address because this is what will get updated over here.
+
+Once we run that in the astronomer.
+
+Okay so guys once you have created this entire database, you can probably keep this endpoint handy
+
+because that is what we are going to update in the host.
+
+Once we run our airflow in the Astro.
+
+Okay, now let's go back to our pipeline.
+
+So here you can see that it has been successfully deployed.
+
+Okay.
+
+And if I just go ahead and see the DAGs okay.
+
+So let's reload this 0222222.
+
+So home something is being shown over here.
+
+If I go ahead and see the deployment.
+
+So this is my deployment here.
+
+You can see today at this particular time previously also I tried some somewhat back you know uh in
+
+this specific account.
+
+But today at just 12:41 a.m., which I am recording at the night.
+
+So here you'll be able to see this.
+
+Okay.
+
+Now, uh, let me just go ahead and see with respect to the Dag.
+
+Okay.
+
+Dag.
+
+Right now, still, uh, no healthy founds in the workspace because this deployment may be still happening.
+
+Okay, so here you can see all the information of this particular Docker image and all.
+
+So this will take some time to run.
+
+Okay.
+
+So once it will be running, you know you should be able to see the DAGs over here.
+
+Okay.
+
+And, uh, till then, if I probably just go ahead and say filter by deployment all these options is
+
+there owner.
+
+All, uh, here you have airflow.
+
+Okay, so let me do one thing.
+
+Let me just go back to the deployments over here.
+
+And here it shows airflow unavailable systems are deploying now.
+
+This may take few minutes.
+
+Okay.
+
+So that basically means whatever deployment have taken this particular image, this is basically getting
+
+deployed.
+
+And once it gets deployed, uh, then you should be some be able to see something in the Dag and this
+
+airflow unavailable that you can see on the right hand side.
+
+Right.
+
+This will also get enabled.
+
+Okay.
+
+So we'll just wait for some time and uh let's see for this.
+
+Okay.
+
+But here you can see previously also I have created some images and all, but every time it gets deployed
+
+right, you will be able to see the fresh thing over here.
+
+Okay.
+
+So just let's wait till the deployment specifically happens and then we will continue.
+
+So finally guys, you can see now uh, we just try to reload this 2 to 3 times.
+
+Then you will be able to see that now your image has been deployed, even though if you see in the Dag.
+
+So DAGs also you'll be able to see NASA Apod, Postgres, you know, and before just recording this
+
+video, I also tested multiple times to see that if everything was working fine and it worked, everything
+
+worked smoothly.
+
+Okay.
+
+Now, if I go back to my deployments, uh, if I go inside this okay, here you can see open airflow
+
+option is there.
+
+Right.
+
+So go and click on this open airflow.
+
+Now there are two important connections that we need to update right.
+
+Like how we updated over here right in our localhost.
+
+So if you go over here so similarly you will be able to see in the admin.
+
+See the entire airflow is running in this specific URL in this particular cloud.
+
+Right.
+
+And this is inside astronomer.
+
+So here you'll be able to see something called as connections.
+
+Now inside this connections So let's see.
+
+No healthy upstream.
+
+Why?
+
+Okay, let me open this.
+
+Okay.
+
+Uh, okay.
+
+Still getting.
+
+Okay, let's open the.
+
+Still, it is not showing anything.
+
+No worries.
+
+I think this is getting deployed yet.
+
+Okay, I have to start over here.
+
+See, uh, the problem that we did right in the deployment, uh, when we went inside this, we were
+
+trying to open the airflow, and the airflow was not opening.
+
+The reason is very simple, because this is not yet started.
+
+So go to the DAGs.
+
+And here you will be able to see one blue color button.
+
+See on the right hand side.
+
+Just go ahead and click on this run.
+
+And now your NASA bot Postgres has been triggered successfully.
+
+Okay now if I go ahead and see in the deployment, if I go ahead and click on the open airflow, now
+
+my airflow should be able to run.
+
+Okay.
+
+And this is the URL that you are able to see.
+
+Now two important things.
+
+Uh go to the admin page.
+
+Go to connections and I need to update the two connections, right?
+
+And these two connections also have updated it just to test beforehand, but I will talk about it.
+
+See here you need to go ahead and write your connection ID okay.
+
+The connection ID will be found in the code.
+
+Okay.
+
+So here if you go ahead and see in the code here this is my Postgres connection.
+
+So this Postgres connection will be added over here.
+
+Then you have to select the connection type as Postgres host is nothing.
+
+But this will be a Postgres connection end point, right?
+
+So if you go to the AWS, this particular URL that you are able to see, I told you to copy it, right.
+
+So that is what you are going to put it over here.
+
+Then the database name is Postgres, login is Postgres and password.
+
+Also I will go ahead and write Postgres.
+
+Why I'm writing all Postgres because in the docker compose.
+
+Also we have set that up right.
+
+And while creating the database also we use Postgres, Postgres, Postgres.
+
+Right.
+
+And then we are going to save this.
+
+The port will be 5432.
+
+Right.
+
+And the second connection that you really need to put is about your NASA API.
+
+And this I think, uh, need not be repeated because NASA underscore API https will be there.
+
+This is your host and this is your API key, right?
+
+The API key I hope you are having in this particular format, you have to upload it.
+
+I'll just go ahead and save it okay.
+
+Now I'll go to my Dag and I've run it multiple number of times just to verify whether everything is
+
+working fine.
+
+So here you can see before I was getting some red color, but that was just a kind of trial that I actually
+
+did before recording the video because I want to show you some more things.
+
+Right.
+
+So that is the reason.
+
+Now I'll go ahead and click on trigger Dag.
+
+Now here you can see my new Dag has been opened.
+
+And this is basically giving me a green color signal.
+
+That basically means it's working fine.
+
+So if I go to the graph create table, if I go ahead and see in the logs.
+
+So this entire create table function is basically getting executed.
+
+If I can go to extract a pod, if I go ahead and see in the logs, I should be able to see see retrieving
+
+connection, underscore, API and all.
+
+And finally, if I go ahead to the graph transform underscore upward underscore data.
+
+So here you'll be able to see the logs title.
+
+Everything is basically coming up.
+
+So this in short is exactly happening.
+
+All the things are actually happening in your, uh, astronomer cloud.
+
+And my database is basically over here in the EC2 instance.
+
+Now, still, if you want to see that how many records has been inserted into a database, go to your
+
+DB viewer.
+
+Okay.
+
+And let me do one thing.
+
+Let me just, uh, let me disconnect.
+
+Okay.
+
+Uh, let me do one thing.
+
+Let me just go ahead and connect to a new database.
+
+Okay.
+
+Now here I'm going to go ahead and connect to the Postgres SQL.
+
+And it is basically asking me for the local host, uh, the host address.
+
+Now, you know that my host address where it is available, this is my host address.
+
+I will open this I will put it over here.
+
+Okay, then my username and my password will be again Postgres.
+
+Okay.
+
+I will go ahead and test the connection.
+
+So this should be basically communicating with my database that is there in my uh, AWS uh cloud.
+
+Right.
+
+So here it says it is fine.
+
+If I go ahead and finish this, you'll be able to see that my Postgres C three is basically there.
+
+And now let me just open it and show you the table.
+
+The pod underscore data table will be available over here.
+
+This was from my localhost.
+
+So if you remember Postgres schema public table a pod underscore data okay.
+
+Now just to execute and show you that how many records are basically available, I will just go ahead
+
+and open a SQL editor or not SQL editor, open a SQL script, enter the pods.
+
+Okay, something is asking me, no worries.
+
+So I'll just go ahead and see this.
+
+A pod underscore data and let me just go ahead and enter.
+
+No active connection okay.
+
+This script is not opened in the connection.
+
+Open a SQL script.
+
+Okay.
+
+Select star from a pod.
+
+Underscore data.
+
+And I'll press control.
+
+Enter.
+
+And here you should be able to see your records.
+
+So till now I have uploaded 4 to 5 records because I have run it 2 to 3 times.
+
+So that is the reason you are able to see this.
+
+So this entirely is happening in the cloud platform, right.
+
+Your database is over here in the AWS.
+
+Your uh, airflow is specifically running over here in the Astro Pro Astro Cloud itself.
+
+Right.
+
+And I have already showed you how you can probably go ahead and do the deployment step by step.
+
+So I hope you like this particular project with respect to end to end, because we have also made sure
+
+that we have done the deployment in the cloud.
+
+And since airflow is being efficiently managed by astronomer, so that is my duty to probably show you
+
+all the cloud different, different kind of cloud platforms and what feature we can specifically use
+
+so that tomorrow, if you go into the different companies, you should be able to use all these things.
+
+So yes, this was it from my side.
+
+I will see you in the next video.
+
+Thank you.

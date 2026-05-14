@@ -1,0 +1,389 @@
+Hello guys.
+
+So welcome to this new amazing module that is Apache Airflow, which is a very important MLOps tool.
+
+And I feel from big data engineers to data science to ML engineers, everybody uses this specific tool.
+
+So in this module and in the upcoming series of video we are going to discuss more about airflow.
+
+First of all, we will understand why airflow is actually required and why as an ML engineer or why
+
+as a data engineer this is a very important tool.
+
+So first of all, we will go ahead with the definition.
+
+So here you can see that Apache Airflow is an open source platform used to programmatically author,
+
+schedule and monitor workflows.
+
+So this is the very important statement that I'm marking it over here.
+
+It allows you to define complex workflows such as code and manage the execution.
+
+Airflow is commonly used for data pipelines, where tasks like data extraction, transformation, and
+
+loading are orchestrated across multiple systems.
+
+So please make sure that you also mark this particular point because this is something called as ETL.
+
+Okay.
+
+Data extraction, transformation and loading.
+
+I'll discuss more about it as we go ahead.
+
+Now, before you understand more about Apache Airflow, it is important that we try to understand the
+
+entire life cycle of a data science project.
+
+Now, in the life cycle of a data science project here you can see whenever there is a project that
+
+is initiated in a company.
+
+The first step is specifically with respect to requirement gathering.
+
+Now in the requirement gathering, usually the domain expertise or product owner right along with the
+
+business analyst, they will have a discussion.
+
+Now who are these domain experts or product owner?
+
+This may be people who are, let's say, for this particular project belongs to a domain called as retail.
+
+Right.
+
+So the product owner or the domain expertise will be the person who is an expert in this specific field
+
+and who has been working in that particular company.
+
+Okay.
+
+So obviously this person becomes a domain expertise over there.
+
+Now this business analyst will be the person who will try to interact with the domain expertise person
+
+or the product owner, and they'll jot down all the requirements based on the sprint that they are specifically
+
+planning.
+
+And this requirements include like what all modules they really want to develop in this particular data
+
+science project.
+
+Okay.
+
+Then when we go to the next step, all these requirements, once it is written down, it will be sent
+
+to the data analyst or data scientist team.
+
+And this is for a specific data science project or a big data project also.
+
+Okay.
+
+Now what happens is that once this entire requirement goes to the data analyst or data scientist team
+
+data analyst or data science team along with the domain expert or product owner, they will still have
+
+a discussion and they will try to identify.
+
+They will try to identify the data like to solve this problem.
+
+From where should we probably take the data?
+
+Now data may be available in the internal database.
+
+It may be available in some third party cloud APIs.
+
+It may be paid, it may be free, or it can also be a IoT data.
+
+Right?
+
+So?
+
+So they will just identify the right source of data that is required in order to solve this particular
+
+project.
+
+Now, once they identify it, then what will happen is that the data pipeline is basically created.
+
+And this is where your big data engineering team will be responsible in doing this particular task.
+
+That is data pipeline.
+
+I've just given you one idea of creating a data pipeline in DAGs hub.
+
+Right.
+
+So this data pipeline will be created by using this ETL process.
+
+ETL basically means extraction, transformation and loading.
+
+Extraction basically means from which source I need to extract, whether it is API, whether it is database
+
+transformation basically means some like we need to write some code for cleaning, for processing anything
+
+that you are specifically want to do for that particular data.
+
+Right.
+
+And loading is nothing but loading in some data source, right?
+
+It can be MongoDB, it can be some databases.
+
+Okay, so this big data engineering team specifically creates this data pipeline.
+
+And as I've already mentioned, ETL pipeline.
+
+Right.
+
+And once the ETL pipeline is basically created, finally our data will be available in some source.
+
+Now this source can be any database.
+
+It can be MongoDB, it can be MongoDB, it can be any database like MySQL or it can be Postgres.
+
+Right?
+
+It can be any SQL, it can be any data source itself.
+
+And again it depends on the problem statement.
+
+What data source they are basically using can also be Amazon S3 bucket okay.
+
+Whether it is stored in a JSON file, whether it is probably stored in the form of a relational database
+
+like that.
+
+Right.
+
+Now, once the data engineering team makes sure that our data is available in the data source, then
+
+the life cycle of our entire data science project goes out and here is what is the first process that
+
+is before this.
+
+Also, we first of all start with something called as data ingestion.
+
+Okay.
+
+So this is my first block that actually happens before feature engineering right.
+
+So first step is nothing but this.
+
+Now in the data ingestion what happens is that we read the data from this specific source right here.
+
+We read data from a source right now.
+
+After we read the data from the source, then the next step goes ahead with feature engineering.
+
+And this all our tasks are performed by data scientist itself.
+
+Right.
+
+So then the feature engineering is performed and the feature selection is performed.
+
+In feature engineering we perform EDA.
+
+We may handle missing values.
+
+We may handle outliers.
+
+We may handle categorical encoding.
+
+We may handle normalization and standardization when we go to the next step.
+
+This is basically feature selection.
+
+Here we apply correlation forward elimination.
+
+Backward elimination.
+
+All these techniques that is available in feature selection.
+
+Then after this once this data is basically cleaned, we get the right kind of data, and that is the
+
+data which will be used for model creation or hyperparameter tuning.
+
+So we perform all the model creation or hyperparameter tuning we perform Gridsearchcv Randomizedsearchcv.
+
+If you are using Keras we use Keras tuner Hyperopt.
+
+You know, um, all these things, right?
+
+Hyperopt Optuna.
+
+So these are techniques that you specifically learn when you probably go ahead and perform hyperparameter
+
+tuning.
+
+Now once your model is created, then we dockerize it.
+
+We do the deployment in some cloud like AWS, Azure or Google Cloud, Heroku.
+
+And then finally we perform the model monitoring.
+
+Right?
+
+So this is the entire overall process of the life cycle of a data science project.
+
+Okay.
+
+And this life cycle of data science project uh, continuously like see when we say model monitoring
+
+and retraining after the model requires more retraining.
+
+Then again, we have to follow this particular process of data ingestion, feature engineering.
+
+And all because we need to retrain our model again.
+
+And this process will also continue going on.
+
+Right.
+
+Because of this ETL pipeline, what the big data engineering team has created, we need to continuously
+
+ingest more and more data in our data source, because the data keeps on changing, right?
+
+As as people start using the use cases, they have different kind of feedback that they may be a new
+
+data that is basically coming up.
+
+So our model needs to also be retrained with those data.
+
+So this ETL pipeline will continuously work right.
+
+It has to work over here right now.
+
+Every step that you have seen, I've shown you block by block each and every steps.
+
+But the main thing is that when we want to make or when we take this entire project into the production,
+
+right into the production, let's say it is already running in the cloud, then model monitoring, model
+
+retraining, getting the new data needs to be automated completely right.
+
+We cannot just do each and every manual task right.
+
+This entire process needs to be automated, right?
+
+Let's say in big data engineering team, I need to automate this ETL process like every fourth night
+
+or every day.
+
+I should be getting a new data in my data source.
+
+Okay.
+
+Here in the life cycle of a data science project, you know, whenever the model accuracy decreases,
+
+I should automate this retraining process.
+
+It may happen every biweekly.
+
+It may happen once in a week.
+
+Right.
+
+So that process needs to be completely automated.
+
+And that is where this airflow.
+
+Right.
+
+Airflow, which is an open source platform will be used.
+
+If we really want to automate this entire process we can specifically use airflow.
+
+So if I talk about Apache Airflow in for creating this ETL pipeline, to automate this ETL pipeline,
+
+we can as a big data engineering team, we can use Apache Airflow over here.
+
+Right.
+
+So here we can specifically use Apache Airflow.
+
+So let me go ahead and write Apache Airflow to automate this entire process of data engineering.
+
+Ingestion, to feature engineering to feature selection, model creation model deployment and monitoring.
+
+I can also this or I can I can automate this entire workflow as a data scientist scientists using Apache
+
+Airflow write.
+
+Apache airflow.
+
+So as you go ahead, we will be discussing all these things.
+
+We will be implementing it completely from basics.
+
+And then we'll create a very good, amazing, end to end project where we are going to create our ETL
+
+pipeline, where we are going to create the entire data ingestion, to do feature engineering, to feature
+
+selection, to model creation, model deployment, model monitoring, all this process.
+
+And then we'll be automating right with the help of airflow.
+
+The automation will happen in such a way that this we can schedule it.
+
+This process can be entirely scheduled right with the help of airflow that how frequently you want the
+
+entire model to be trained, how frequently you want your ETL pipeline, updating the data source,
+
+everything.
+
+Right.
+
+And that is why I feel Apache Airflow is quite amazing, because if I just consider this as an example,
+
+right?
+
+Let's say this one.
+
+If I consider the life cycle of a data science project, here you have multiple steps like feature engineering,
+
+feature selection, model creation.
+
+Hyperparameter tuning.
+
+This all can be considered as a task in airflow.
+
+Okay, so when we consider this as a task in the airflow so we can create all the task and we can create
+
+in such a way that we can also make sure that in which step and process this task needs to be executed
+
+with the help of airflow.
+
+And that is what we will be discussing as we go ahead.
+
+But I think I gave you an idea about what exactly Apache Airflow is and what exactly we are able to
+
+do it right.
+
+Two important things that you really need to keep in mind.
+
+So here you can see it is an open source platform which is used to programmatically author, schedule
+
+and monitor workflows.
+
+Here you can also see logs.
+
+You can probably see how the flow is going on.
+
+You can create this entire, uh, modules in the form of graphs, you know, and then you can probably
+
+monitor it.
+
+Okay.
+
+So that is what I will be discussing in the upcoming videos, because before that, there are some more
+
+topics that needs to be covered with respect to Apache Airflow.
+
+And then we will start with the practical intuition.
+
+So yes, this was it from my side.
+
+I will see you all in the next video.
+
+Thank you.
