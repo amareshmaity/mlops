@@ -1,259 +1,476 @@
-# MLflow 
-## What is MLflow?
+# MLOps Notes
 
-MLflow is an **open-source MLOps platform** designed to manage the **end-to-end lifecycle of machine learning projects**. It provides tooling to track experiments, manage models, handle dependencies, and support deployment and monitoring across the entire data science workflow.
+This repository is a structured learning workspace for understanding `MLOps` from the ground up. The goal of the root notes is to explain the main ideas behind MLOps clearly and connect the different topics covered in the folders of this repo.
 
-![alt text](Images/ml-workflow.png)
+These notes focus on:
 
-<br/>
+- definitions
+- core concepts
+- lifecycle understanding
+- practical workflow thinking
+- how the main MLOps pieces fit together
 
-## Data Science Project Lifecycle (Context for MLflow)
+They do not go deep into every individual tool because separate notes for topics such as `MLflow`, `DVC`, `DagsHub`, `Docker`, `Airflow`, `AWS`, and `GitHub Actions` already exist in their own folders.
 
-A typical data science project follows the below lifecycle:
+## What Is MLOps?
 
-1. **Data Preparation**
+`MLOps` stands for `Machine Learning Operations`.
 
-   * Data collection via APIs, databases, paid data sources
-   * ETL pipelines created by Data Engineers
-   * Data stored in databases (e.g., MongoDB)
+It is a set of practices used to build, manage, deploy, monitor, and improve machine learning systems in a reliable and repeatable way.
 
-2. **Exploratory Data Analysis (EDA)**
+In simple terms:
 
-   * Statistical analysis
-   * Hypothesis testing
-   * Understanding data distributions and relationships
+- `Machine Learning` helps us create predictive or intelligent models
+- `Operations` helps us run those models consistently in real environments
+- `MLOps` brings both sides together
 
-3. **Feature Engineering**
+MLOps can be thought of as the discipline that turns a machine learning experiment into a maintainable system.
 
-   * Handling missing values
-   * Encoding categorical variables
-   * Dealing with imbalanced datasets
-   * Feature transformations
+## Why MLOps Is Needed
 
-4. **Model Training**
+A machine learning project is rarely just about writing training code once.
 
-   * Training multiple models
-   * Hyperparameter tuning
-   * Comparing algorithms
+Real projects usually involve:
 
-5. **Model Validation**
+- changing datasets
+- multiple experiments
+- many hyperparameter combinations
+- model comparison
+- dependency management
+- collaboration across people and teams
+- deployment to real environments
+- monitoring after deployment
+- retraining when performance drops
 
-   * Evaluating models using performance metrics
-   * Overlap of responsibilities between Data Scientists and ML Engineers
+Without MLOps, teams often face problems such as:
 
-6. **Deployment**
+- "works on my machine" issues
+- no clear record of which dataset version was used
+- no tracking of which parameters produced the best model
+- confusion about which model is currently deployed
+- manual retraining steps
+- deployment inconsistency
+- no visibility into failures
 
-   * Deploying models to cloud platforms (AWS, GCP, Azure)
-   * Ensuring scalability and reliability
+MLOps exists to reduce this chaos and make ML systems reproducible, observable, and easier to operate.
 
-7. **Monitoring**
+## MLOps Is More Than Model Training
 
-   * Monitoring model performance
-   * Detecting data drift
-   * Deciding when retraining is required
+A common beginner mistake is to think that machine learning ends after a model achieves good accuracy.
 
-<br/>
+In practice, the model is only one part of a larger system.
 
-## Roles Across the Lifecycle
+An actual ML solution usually includes:
 
-| Role                             | Key Responsibilities                                       |
-| -------------------------------- | ---------------------------------------------------------- |
-| Data Engineer                    | Data preparation, ETL pipelines                            |
-| Data Scientist                   | EDA, Feature Engineering, Model Training, Model Validation |
-| ML Engineer / MLOps Professional | Model Validation, Deployment, Monitoring                   |
-| Data Governance Officer          | Involved across all stages                                 |
+- data collection
+- ETL or data ingestion
+- preprocessing
+- feature engineering
+- model training
+- evaluation
+- experiment tracking
+- artifact storage
+- deployment
+- monitoring
+- retraining
 
-<br/>
+So MLOps is not only about building models. It is about managing the entire lifecycle around the model.
 
-## 4. Why MLflow is Needed
+## How MLOps Differs From Traditional Software Operations
 
-In real-world projects:
+Traditional software systems mostly focus on:
 
-* Multiple experiments are conducted
-* Multiple models and hyperparameter combinations are tested
-* Results must be reproducible, versioned, and comparable
-* Collaboration across teams is required
+- source code
+- application logic
+- testing
+- deployment
 
-MLflow acts as a **central system of record** for all these activities.
+MLOps includes all of that, but also introduces additional moving parts:
 
-<br/>
+- data versions
+- feature changes
+- model artifacts
+- experiment history
+- training pipelines
+- performance drift
+- retraining triggers
 
-## How Data Scientists Leverage MLflow
+This means ML systems are harder to manage than normal software systems because behavior depends not only on code, but also on data and model state.
 
-### 1. Experiment Tracking and Hypothesis Testing
+## Core Goal of MLOps
 
-* Tracks experiments across:
+The core goal of MLOps is to create a system where machine learning work becomes:
 
-  * EDA
-  * Feature engineering
-  * Model training
-  * Model validation
-* Logs:
+- reproducible
+- versioned
+- automated
+- testable
+- deployable
+- monitorable
+- collaborative
 
-  * Parameters
-  * Metrics
-  * Results of statistical tests
-* Supports versioning and reproducibility
+If a team can answer questions like the following, their MLOps maturity is improving:
 
-Use case example:
+- Which code version produced this model?
+- Which dataset version was used?
+- Which parameters were chosen?
+- What metrics did the model achieve?
+- Where is the model stored?
+- How was it deployed?
+- How do we know if it is still performing well?
+- When should retraining happen?
 
-* Tracking multiple statistical analyses during EDA
-* Comparing results of different feature engineering strategies
+## End-to-End MLOps Lifecycle
 
-<br/>
+The folders in this repository collectively point to a full MLOps lifecycle like this:
 
-### 2. Code Structuring and Pipeline Creation
+1. Problem understanding
+2. Data collection
+3. Data preparation
+4. Experimentation and model development
+5. Model evaluation
+6. Versioning and tracking
+7. Packaging and environment management
+8. Workflow orchestration
+9. Deployment
+10. Monitoring
+11. Retraining and continuous improvement
 
-* Encourages structured pipelines for:
+## 1. Problem Understanding
 
-  * EDA
-  * Feature Engineering
-  * Model Training
-  * Model Validation
-* Improves maintainability compared to ad-hoc scripts
+Every ML project starts with a business or product problem.
 
-<br/>
+Examples:
 
-### 3. Model Packaging and Dependency Management
+- predict house prices
+- classify flowers
+- forecast demand
+- detect fraud
+- automate a data pipeline
 
-* Packages models along with dependencies
-* Manages environments more efficiently than traditional setup.py-based workflows
-* Ensures reproducibility across systems
+At this stage, the team defines:
 
-<br/>
+- the objective
+- the target variable
+- the success metric
+- the expected business outcome
 
-### 4. Hyperparameter Tuning and Evaluation (Strongest Feature)
+This stage matters because a model with good technical metrics is still not useful if it does not solve the real problem.
 
-* Tracks hyperparameter tuning experiments automatically
-* Logs:
+## 2. Data Collection and ETL
 
-  * Each hyperparameter combination
-  * Corresponding metrics
-* Integrates with techniques like GridSearchCV
-* Provides visualizations for comparison
+Machine learning depends on data.
 
-Benefits:
+That data may come from:
 
-* Easy comparison of models
-* Selection of optimal model for deployment
-* Tracking model performance over time
+- APIs
+- databases
+- files
+- cloud storage
+- IoT systems
+- third-party sources
 
-<br/>
+This is where `ETL` becomes important.
 
-## How MLOps Professionals / ML Engineers Use MLflow
+`ETL` means:
 
-### 1. Model Lifecycle Management
+- `Extract`: collect data from source systems
+- `Transform`: clean, validate, reshape, and combine data
+- `Load`: store prepared data in a usable destination
 
-* Manage trained models **pre- and post-deployment**
-* Handle:
+ETL is a foundational concept because good ML systems depend on reliable and repeatable data preparation.
 
-  * Model versioning
-  * Promotion from staging to production
-  * Model Registry
+## 3. Data Preparation and Feature Work
 
-<br/>
+Once data is available, it usually must be prepared for modeling.
 
-### 2. Secure Model Deployment
+Typical activities include:
 
-* Deploy models to production environments
-* Ensure scalability and reliability
+- handling missing values
+- encoding categories
+- scaling numeric data
+- selecting useful columns
+- splitting features and target
+- creating training and testing datasets
 
-<br/>
+This stage is important because model quality is heavily influenced by data quality and feature design.
 
-### 3. Deployment Dependency Management
+## 4. Experimentation and Model Development
 
-* Manage runtime dependencies
-* Ensure consistency between training and production environments
+This is the part many people associate most strongly with machine learning.
 
-<br/>
+Typical activities include:
 
-## MLflow and Generative AI (Recent Extension)
+- training different algorithms
+- testing parameter combinations
+- comparing results
+- measuring model performance
+- selecting the best candidate
 
-MLflow now supports **Generative AI workflows**, including:
+This stage is not just about finding a high score. It is about building a traceable path from idea to result.
 
-* Experiment tracking for Large Language Models (LLMs)
-* Prompt engineering experimentation
-* Comparing:
+## 5. Evaluation
 
-  * Different prompts
-  * Different base LLMs
-* Selecting best base model
-* Supporting fine-tuning based on project requirements
+A trained model should not be accepted only because training completed successfully.
 
-<br/>
+It should be evaluated using appropriate metrics such as:
 
-## Core Use Cases of MLflow
+- accuracy
+- precision
+- recall
+- F1 score
+- RMSE
+- MAE
+- R2
 
-### 1. Experiment Tracking
+Evaluation helps answer:
 
-* Tracks:
+- Is the model good enough?
+- Is it better than the previous version?
+- Is it stable enough for deployment?
 
-  * Parameters
-  * Metrics (log loss, R², accuracy, etc.)
-* Centralized tracking via **MLflow UI**
+## 6. Versioning and Tracking
 
-<br/>
+One of the strongest ideas in MLOps is that code alone is not enough to reproduce a result.
 
-### 2.  Model Selection and Deployment
+A result often depends on:
 
-* MLOps engineers use MLflow UI to:
+- code version
+- data version
+- parameter values
+- model artifact
+- environment and dependencies
 
-  * Compare experiments
-  * Identify top-performing models
-  * Deploy selected models
+This is why versioning and tracking are central to MLOps.
 
-<br/>
+At a concept level, a strong MLOps workflow should track:
 
-### 3. Model Performance Monitoring
+- source code
+- datasets
+- model files
+- pipeline configuration
+- experiment metadata
+- performance metrics
 
-* Monitor deployed model performance
-* Track degradation and drift
+## 7. Packaging and Environment Consistency
 
-<br/>
+A project that works only on one machine is not production-ready.
 
-### 4. Team Collaboration
+ML projects often depend on:
 
-* Shared UI for all experiments
-* Enables collaboration among:
+- specific Python versions
+- libraries
+- system packages
+- runtime configuration
 
-  * Data Scientists
-  * ML Engineers
-  * Other stakeholders
+Environment consistency is important because the same model or pipeline should behave as predictably as possible across:
 
-<br/>
+- local development
+- testing
+- staging
+- production
 
-## MLflow in Practice (High-Level Flow)
+This is why packaging and container-based thinking are important parts of MLOps.
 
-1. During Model Training:
+## 8. Workflow Orchestration
 
-   * Track accuracy, error, train/test metrics
+As projects grow, ML and data workflows stop being single scripts.
 
-2. During Model Validation:
+Instead, they become multi-step pipelines such as:
 
-   * Identify best-performing model
+`ingestion -> preprocessing -> training -> evaluation -> deployment`
 
-3. Using MLflow UI:
+Or:
 
-   * Visualize all experiments
+`extract -> transform -> load -> validate -> trigger downstream job`
 
-4. MLOps Engineer:
+Workflow orchestration is the concept of:
 
-   * Reviews UI
-   * Selects best model
-   * Deploys to production
+- defining the order of tasks
+- handling dependencies
+- scheduling runs
+- monitoring execution
+- retrying failed steps
 
-<br/>
+This becomes especially useful when pipelines must run repeatedly and reliably.
 
-## Summary
+## 9. Deployment
 
-MLflow provides:
+A machine learning model creates value only when it is used in a real workflow.
 
-* End-to-end lifecycle management
-* Strong experiment tracking
-* Robust hyperparameter evaluation
-* Model registry and deployment support
-* Collaboration-friendly UI
-* Support for both traditional ML and Generative AI workflows
+Deployment can mean:
 
-It serves as a foundational MLOps platform for production-grade machine learning systems.
+- exposing a prediction API
+- running a batch scoring job
+- serving a model inside an application
+- pushing outputs into another system
 
+The exact deployment style may differ, but the concept is the same: move the validated model into an environment where it can produce real outcomes.
+
+## 10. Monitoring
+
+Deployment is not the end of the lifecycle.
+
+A deployed model must be observed over time.
+
+Monitoring can involve:
+
+- service health
+- prediction latency
+- error rate
+- input data changes
+- output quality
+- performance degradation
+
+This matters because real-world conditions change.
+
+A model that was good during training may become weaker later because:
+
+- data distributions shift
+- user behavior changes
+- the business process changes
+- the environment changes
+
+## 11. Retraining and Continuous Improvement
+
+MLOps treats models as living assets rather than one-time deliverables.
+
+That means teams should be prepared to:
+
+- refresh data
+- retrain models
+- re-evaluate performance
+- compare old and new versions
+- redeploy only when improvement is confirmed
+
+This makes MLOps a continuous loop rather than a one-time project.
+
+## Core Concepts to Remember
+
+### Reproducibility
+
+If the same code, same data, and same configuration are used, the result should be reproducible.
+
+### Versioning
+
+Different versions of code, data, and models should be identifiable and restorable.
+
+### Experiment Tracking
+
+Every important run should capture enough metadata to understand what was tried and what outcome it produced.
+
+### Pipeline Thinking
+
+An ML project should be viewed as a sequence of connected stages, not a single notebook.
+
+### Automation
+
+Repeated manual steps should gradually become automated to reduce errors and save time.
+
+### Observability
+
+Teams should be able to see what happened, what failed, and what changed.
+
+### Collaboration
+
+MLOps should help data scientists, ML engineers, and platform teams work from a shared, understandable system.
+
+## Main Artifacts in an MLOps Project
+
+A mature ML workflow usually manages several artifact types:
+
+- code
+- data
+- notebooks
+- configuration files
+- trained model files
+- metrics
+- plots
+- logs
+- workflow definitions
+- deployment specifications
+
+Each artifact tells part of the story of how the ML system was built and operated.
+
+## Roles in an MLOps-Oriented Workflow
+
+Different teams may participate at different stages:
+
+- `Data Engineers` build and maintain data pipelines
+- `Data Scientists` explore data and develop models
+- `ML Engineers / MLOps Engineers` operationalize training, deployment, and monitoring
+- `QA / Platform / DevOps teams` help with testing, environments, automation, and reliability
+
+The exact boundaries change by company, but MLOps usually sits at the intersection of these roles.
+
+## Practical Mental Model
+
+A simple way to remember MLOps is to think in terms of controlled movement:
+
+- move data from sources into usable form
+- move experiments from ideas into measurable results
+- move models from local files into managed artifacts
+- move validated models into deployment environments
+- move operational feedback back into retraining decisions
+
+In that sense, MLOps is about managing flow with discipline.
+
+## Common Problems MLOps Tries to Solve
+
+- inconsistent environments
+- missing experiment history
+- confusion around dataset versions
+- hard-to-repeat training runs
+- manual pipeline execution
+- fragile deployments
+- lack of monitoring after release
+- weak collaboration between data and engineering teams
+
+## Relationship Between the Main Building Blocks
+
+The folders in this repository cover a practical set of building blocks that commonly appear together:
+
+- `Git` helps version source code and collaboration history
+- `DVC` helps version data and large model artifacts
+- `MLflow` helps track experiments and model metadata
+- `DagsHub` helps organize collaboration around code, data, and experiments
+- `Docker` helps package environments consistently
+- `Airflow` helps orchestrate ETL and ML workflows
+- `AWS` helps provide cloud infrastructure for storage and tracking
+- `GitHub Actions` helps automate testing and workflow execution
+
+The important idea is not to memorize tools separately, but to understand the role each category plays in the larger system.
+
+## High-Level Workflow Across This Repository
+
+The learning path across this repo can be summarized like this:
+
+`MLOps basics -> experiment tracking -> data versioning -> pipeline design -> cloud tracking -> containerization -> orchestration -> ETL automation -> CI/CD automation`
+
+That sequence reflects how ML projects evolve from local experimentation toward more production-oriented systems.
+
+## How This Repository Is Organized
+
+This repo is arranged as topic-wise study modules:
+
+- [01-MLFLOW_Intro](./01-MLFLOW_Intro) for MLflow fundamentals and tracking concepts
+- [02-ML_MLFLOW](./02-ML_MLFLOW) for practical MLflow-based ML experiments
+- [03-DL_MLFLOW](./03-DL_MLFLOW) for deep learning work with MLflow notebooks
+- [04-DVC](./04-DVC) for data versioning concepts and workflows
+- [05-Dagshub](./05-Dagshub) for collaboration-oriented MLOps workflow ideas
+- [06-ML_Pipeline](./06-ML_Pipeline) for pipeline structure and reproducible training flow
+- [07-AWS_MLFLOW_Tracking](./07-AWS_MLFLOW_Tracking) for cloud-based experiment tracking
+- [08-Docker](./08-Docker) for environment packaging and container-based workflows
+- [09-Airflow](./09-Airflow) for orchestration concepts in ML systems
+- [10-Airflow_ETL_Pipeline](./10-Airflow_ETL_Pipeline) for ETL workflow thinking and implementation
+- [11_Github_Action](./11_Github_Action) for CI/CD and workflow automation concepts
+
+## Final Understanding
+
+MLOps is best understood as the operating system around machine learning work.
+
+It brings structure to the full ML lifecycle by making data, experiments, models, environments, pipelines, and deployments easier to manage together.
+
+If machine learning answers the question "how do we build a model?", MLOps answers the larger question:
+
+"How do we build, run, improve, and trust the full system around that model over time?"
