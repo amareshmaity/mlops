@@ -3,4 +3,5 @@ mlruns
 mlartifacts
 venv/
 __pycache__/
-.git
+.git*
+.vscode*

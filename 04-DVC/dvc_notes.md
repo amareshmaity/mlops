@@ -297,4 +297,3 @@ This is one reason DVC is more suitable than Git alone for ML data and large art
 ## One-line summary
 
 DVC is a tool that works with Git to version datasets and ML artifacts, using metadata, hashes, and cache so we can reproduce and restore different data versions easily.
-
