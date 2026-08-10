@@ -1,12 +1,18 @@
 # ML Pipeline with DVC, MLflow, and DagsHub
 
-This folder contains my study material for building an end-to-end machine learning pipeline using `DVC`, `MLflow`, and `DagsHub`.
+This section shows how to build an end-to-end machine learning pipeline using `DVC`, `MLflow`, and `DagsHub`.
 
-The project idea is based on the Pima Indians Diabetes dataset and follows a simple but important ML workflow:
+The project idea is based on the Pima Indians Diabetes dataset.
 
-`raw data -> preprocessing -> model training -> evaluation -> experiment tracking -> versioning`
+**ML Workflow:**
 
-## What I Learn In This Module
+```text
+raw data -> preprocessing -> model training -> evaluation -> experiment tracking -> versioning
+```
+
+<br/>
+
+## What You will Learn In This Module
 
 In this module, I focus on how multiple MLOps tools work together in one project:
 
@@ -15,14 +21,18 @@ In this module, I focus on how multiple MLOps tools work together in one project
 - `DagsHub` as the remote platform for collaboration and tracking
 - `scikit-learn` for training a `RandomForestClassifier`
 
+<br/>
+
 ## Project Goal
 
-The main goal is to understand how to structure an ML project so that:
+To understand how to structure an ML project so that:
 
 - data changes can be tracked properly
 - model artifacts can be versioned
 - experiments can be logged and compared
 - the pipeline can be reproduced easily
+
+<br/>
 
 ## Pipeline Stages
 
@@ -72,37 +82,20 @@ Main stages:
 - `train`
 - `evaluate`
 
-## Folder Contents
-
-Right now, this folder contains the learning material for the project:
-
-```text
-06-ML_Pipeline/
-|-- README.md
-|-- notes/
-|   |-- 00-study-roadmap.md
-|   |-- 01-project-overview-and-setup.md
-|   |-- 02-params-and-preprocessing.md
-|   |-- 03-training-pipeline.md
-|   |-- 04-mlflow-experiment-tracking.md
-|   |-- 05-evaluation-pipeline.md
-|   |-- 06-dvc-pipeline-orchestration.md
-|   `-- 07-quick-revision-cheatsheet.md
-
-```
+<br/>
 
 ## Notes Structure
 
 I created topic-wise notes for easier revision:
 
-- `00-study-roadmap.md` gives the learning flow
 - `01-project-overview-and-setup.md` explains the project setup
 - `02-params-and-preprocessing.md` covers config and preprocessing
 - `03-training-pipeline.md` explains model training
 - `04-mlflow-experiment-tracking.md` covers MLflow logging
 - `05-evaluation-pipeline.md` explains model evaluation
 - `06-dvc-pipeline-orchestration.md` explains DVC stages
-- `07-quick-revision-cheatsheet.md` is a short recap file
+
+<br/>
 
 ## Important Commands From This Module
 
@@ -152,6 +145,8 @@ Run the full pipeline:
 dvc repro
 ```
 
+<br/>
+
 ## Tech Stack
 
 - `Python`
@@ -160,6 +155,8 @@ dvc repro
 - `DVC`
 - `MLflow`
 - `DagsHub`
+
+<br/>
 
 ## Final Summary
 
@@ -171,7 +168,6 @@ The biggest takeaway for me is understanding the role of each tool:
 - DVC tracks data and pipeline outputs
 - MLflow tracks experiments
 - DagsHub brings everything together remotely
-
 
 <br/>
 

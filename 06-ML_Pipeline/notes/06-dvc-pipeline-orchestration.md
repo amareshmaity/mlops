@@ -105,8 +105,6 @@ So the flow becomes:
 
 ## Why This Is Powerful
 
-What I liked most here:
-
 - the pipeline becomes structured
 - outputs are tracked properly
 - if an input changes, DVC knows which stages need rerun

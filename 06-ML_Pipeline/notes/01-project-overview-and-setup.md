@@ -2,7 +2,7 @@
 
 ## What This Project Is About
 
-This project is a simple end-to-end machine learning pipeline.
+This project is a simple end-to-end machine learning pipeline to automate the ml project's life cycle.
 
 The main idea is:
 
@@ -13,6 +13,8 @@ The main idea is:
 - version data and models with DVC
 - track experiments with MLflow
 
+<br/>
+
 ## Tools Used
 
 - `Python`
@@ -20,6 +22,8 @@ The main idea is:
 - `DVC`
 - `MLflow`
 - `DagsHub`
+
+<br/>
 
 ## Problem Statement
 
@@ -42,7 +46,9 @@ The target column is:
 
 This is a binary classification problem.
 
-My model has to predict whether a person is likely to have diabetes or not.
+The model has to predict **whether a person is likely to have diabetes or not.**
+
+<br/>
 
 ## Why This Project Is Important
 
@@ -50,12 +56,14 @@ This project is not only about training a model.
 
 It is mainly about learning how to manage an ML workflow properly.
 
-What I understood:
+What you will understand:
 
 - Git tracks code
 - DVC tracks data and model artifacts
 - MLflow tracks runs, metrics, parameters, and artifacts
 - DagsHub gives one place to connect all of them
+
+<br/>
 
 ## Initial Project Setup
 
@@ -66,6 +74,8 @@ The flow shown in the module is:
 3. Open it in VS Code
 4. Add `README.md`
 5. Commit and push initial code
+
+<br/>
 
 ## Basic Folder Structure
 
@@ -80,7 +90,7 @@ mlpipeline/
 ├── data/
 │   ├── raw/
 │   │   └── data.csv
-│   └── processed/ or preprocessed/
+│   └── processed/
 ├── models/
 ├── src/
 │   ├── __init__.py
@@ -90,7 +100,9 @@ mlpipeline/
 └── dvc.yaml
 ```
 
-## Environment Setup I Need To Remember
+<br/>
+
+## Environment Setup
 
 Create environment:
 
@@ -112,11 +124,4 @@ Important packages mentioned:
 - `mlflow`
 - `scikit-learn`
 
-## My Understanding Of The Full Workflow
-
-This module starts from project setup, then moves to code, then to tracking, and finally to pipeline automation.
-
-So the real learning sequence is:
-
-`setup -> script creation -> model logging -> DVC pipeline -> remote sync`
 

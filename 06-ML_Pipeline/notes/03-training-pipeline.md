@@ -83,16 +83,4 @@ Example target path:
 models/model.pkl
 ```
 
-## Important Practical Note
-
-One thing I noticed in the transcript:
-
-Sometimes the training script reads the raw file, and sometimes the processed file is intended.
-
-So in my version, I should keep one consistent design:
-
-- either train from processed data
-- or keep preprocessing lightweight but still use its output
-
-Otherwise the pipeline logic becomes confusing.
 

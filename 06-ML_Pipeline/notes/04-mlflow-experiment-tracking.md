@@ -14,15 +14,16 @@ It is also tracking experiments so I can answer questions like:
 
 MLflow is connected to the DagsHub remote tracking server.
 
-The transcript sets environment variables like:
+You should use environment variables like:
 
 - `MLFLOW_TRACKING_URI`
 - `MLFLOW_TRACKING_USERNAME`
 - `MLFLOW_TRACKING_PASSWORD`
 
-The username is the DagsHub username.
+Example: `MLFLOW_TRACKING_URI=https://dagshub.com/username/mlpipeline.mlflow`
 
-The password is usually the DagsHub token or access credential.
+* The username is the DagsHub username.
+* The password is usually the DagsHub token or access credential.
 
 ## What Gets Logged
 
@@ -58,17 +59,10 @@ This helps in better model tracking and registration.
 
 The trained model is also registered in MLflow.
 
-This is useful because later I can:
+This is useful because later you can:
 
 - compare model versions
 - manage the best model more clearly
 - keep deployment-related tracking cleaner
 
-## My Quick Understanding
-
-MLflow handles the experiment side of the story.
-
-DVC handles the data/model versioning side.
-
-Both together make the project much more reproducible.
 

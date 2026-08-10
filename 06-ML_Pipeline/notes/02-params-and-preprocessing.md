@@ -10,6 +10,8 @@ This is useful because:
 - DVC can track parameter changes
 - the code becomes easier to maintain
 
+<br/>
+
 ## Example Parameters
 
 The notes in the module use two main sections:
@@ -27,6 +29,8 @@ train:
   max_depth: 5
 ```
 
+<br>
+
 ## What `preprocess.py` Does
 
 The preprocessing step is intentionally simple.
@@ -37,38 +41,29 @@ Main job:
 - create the output folder if needed
 - save the processed CSV
 
+<br/>
+
 ## Key Libraries Used In Preprocessing
 
 - `pandas`
 - `yaml`
 - `os`
 
+<br/>
+
 ## Flow Inside `preprocess.py`
 
-What I understood from the code:
 
 1. Load preprocessing parameters from `params.yaml`
 2. Read the input CSV with `pandas`
 3. Create the output directory using `os.makedirs(..., exist_ok=True)`
 4. Save the processed file to the configured output path
 
-## Important Learning Point
 
-In the video, preprocessing is very basic.
 
-The aim is not advanced feature engineering here.
+### Note:
 
-The aim is to show how a pipeline stage is created.
-
-So even if the logic is simple, the stage is still important because it teaches:
-
-- how to read config
-- how to create outputs
-- how to connect one stage to the next
-
-## What I Can Add Later In Real Projects
-
-Inside preprocessing, I can later include:
+Inside preprocessing, you can later include:
 
 - missing value handling
 - categorical encoding
@@ -76,13 +71,4 @@ Inside preprocessing, I can later include:
 - feature engineering
 - train/validation data preparation
 
-## Personal Reminder
-
-The transcript shows a few path adjustments while coding.
-
-So I should double-check:
-
-- whether I am saving to `processed` or `preprocessed`
-- whether headers are preserved correctly
-- whether train and evaluate scripts are reading the same version of data
 
