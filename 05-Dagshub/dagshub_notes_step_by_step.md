@@ -1,7 +1,5 @@
 # DagsHub Notes Step by Step
 
-These notes are organized into a clear step-by-step study format.
-
 The flow of learning is:
 
 1. Understand what DagsHub is
@@ -11,19 +9,22 @@ The flow of learning is:
 5. Use DVC with DagsHub to version data
 6. Understand how DagsHub, Git, DVC, and MLflow work together
 
----
+<br/>
 
 ## 1. What is DagsHub?
 
-DagsHub is an **AI/ML collaboration platform** that can act as a **remote repository** for machine learning projects.
+DagsHub is an **AI/ML collaboration platform** that can act as a **remote repository** for managing the entire lifecycle of a machine learning projects(from data ingestion to experiment tracking to model deployment).
 
-It supports work around:
+It supports:
 
-- experiments
-- datasets
-- models
+- data versioning
+- model experiments
+- model registration
 - collaboration
-- reproducibility
+
+![alt text](../Images/dagshub.png)
+
+DagsHub was particularly designed for **unstructured and multimodal data types** – e.g. text, images, audio, video, documents, medical imaging, and binary files.
 
 It is especially useful when a project is being done by:
 
@@ -40,7 +41,7 @@ In such cases, everyone needs a shared place where they can:
 
 That shared place can be DagsHub.
 
----
+<br/>
 
 ## 2. Why DagsHub is useful in MLOps
 
@@ -69,7 +70,7 @@ DagsHub helps with that by providing a hosted place where you can:
 - log MLflow experiments
 - collaborate with teammates
 
----
+<br/>
 
 ## 3. Main features
 
@@ -120,7 +121,7 @@ DagsHub can integrate with many parts of an MLOps stack, such as:
 - Azure
 - Google Cloud
 
----
+<br/>
 
 ## 4. DagsHub vs GitHub
 
@@ -149,7 +150,7 @@ DagsHub is more ML-focused because it supports:
 
 This is why it is useful in MLOps projects.
 
----
+<br/>
 
 ## 5. Step-by-step: Getting started with DagsHub
 
@@ -212,7 +213,7 @@ DagsHub can also provide remote storage and can connect to storage systems like:
 - Google Drive
 - cloud buckets
 
----
+<br/>
 
 ## 6. Step-by-step: Start a local project connected to DagsHub
 
@@ -227,12 +228,14 @@ General idea:
 ```bash
 git clone <dagshub_repo_url>
 ```
-If it ask for credentials, then use your 
+
+If it ask for credentials, then use your
+
 1. dagshub username
-2. dagshub access token: 
-    * go to dagshub setting (your profile)
-    * access token
-    * copy the token and paste it as password 
+2. dagshub access token:
+   - go to dagshub setting (your profile)
+   - access token
+   - copy the token and paste it as password
 
 Then move inside the cloned repository:
 
@@ -265,7 +268,7 @@ git push -u origin main
 
 After this, the repository will show at least one tracked file on DagsHub.
 
----
+<br/>
 
 ## 7. Step-by-step: Prepare environment for DVC + DagsHub
 
@@ -312,7 +315,7 @@ General idea:
 pip install -r requirements.txt
 ```
 
----
+<br/>
 
 ## 8. Step-by-step: Add data to the project
 
@@ -336,7 +339,7 @@ data/data.csv
 
 This dataset becomes the example file that DVC will manage.
 
----
+<br/>
 
 ## 9. Step-by-step: Initialize DVC in the local project
 
@@ -358,7 +361,7 @@ It creates DVC-related files such as:
 
 This means the project is now ready for DVC-based data versioning.
 
----
+<br/>
 
 ## 10. Step-by-step: Track the dataset with DVC
 
@@ -397,7 +400,7 @@ At this point:
 - Git is tracking the DVC metadata
 - DVC is tracking the actual dataset
 
----
+<br/>
 
 ## 11. Step-by-step: Configure DagsHub as a DVC remote
 
@@ -464,7 +467,7 @@ So now:
 - code metadata goes through Git
 - actual dataset content goes through the DVC remote in DagsHub
 
----
+<br/>
 
 ## 12. Extra package note
 
@@ -481,7 +484,7 @@ In that case, install the missing support and retry the command.
 
 If `dvc pull` or `dvc push` complains about S3 support, install the required DVC S3 dependency and try again.
 
----
+<br/>
 
 ## 13. Step-by-step: Pull and push data with DVC remote
 
@@ -522,7 +525,7 @@ For a complete update, both are needed:
 - `dvc push` for data
 - `git push` for code and DVC metadata
 
----
+<br/>
 
 ## 14. What appears in DagsHub after pushing
 
@@ -542,7 +545,7 @@ You can also inspect:
 - commit history
 - changes across versions
 
----
+<br/>
 
 ## 15. Step-by-step: Update the dataset version
 
@@ -587,7 +590,7 @@ Now DagsHub can show:
 - the previous dataset version
 - history and comparisons across commits
 
----
+<br/>
 
 ## 16. End-to-end understanding: Git + DVC + MLflow + DagsHub
 
@@ -630,7 +633,7 @@ DagsHub acts as the shared remote platform where:
 
 This is why DagsHub is a very useful MLOps platform.
 
----
+<br/>
 
 ## 17. Structured workflow you should remember
 
@@ -654,7 +657,7 @@ If you want to remember the process in one sequence, use this:
 16. Make data changes later
 17. Repeat `dvc add`, Git commit, `dvc push`, and `git push`
 
----
+<br/>
 
 ## 18. Why this matters in real projects
 
@@ -673,7 +676,7 @@ DagsHub helps by giving one place for:
 - remote DVC data storage
 - remote MLflow experiment tracking
 
----
+<br/>
 
 ## 19. Quick revision points
 
@@ -691,11 +694,16 @@ DagsHub helps by giving one place for:
 - `git push` uploads code and metadata.
 - DagsHub can show DVC-managed files and their history.
 
----
+<br/>
 
 ## 20. One-line summary
 
 DagsHub is a collaborative MLOps platform that combines Git-based code hosting, DVC-based data versioning, and MLflow-based experiment tracking in one remote repository workflow.
 
-## Code example
+### Code example
+
 https://dagshub.com/amaresh/demo-dagshub
+
+<br/>
+
+Read [dagshub documentation](https://dagshub.com/docs/) for more...
