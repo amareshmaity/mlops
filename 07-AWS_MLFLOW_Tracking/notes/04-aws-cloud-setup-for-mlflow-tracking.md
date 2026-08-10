@@ -4,15 +4,6 @@
 
 Here we are setting up the AWS side of the project so that MLflow tracking can run on a remote `EC2` machine.
 
-In the previous part, we had already:
-
-- completed the local ML project code
-- added MLflow logging
-- kept a placeholder for the remote tracking URI
-- documented the overall AWS setup steps in the project `README.md`
-
-Now we are actually preparing the cloud infrastructure needed for tracking.
-
 The main tasks here are:
 
 - log in to the AWS console
@@ -24,6 +15,8 @@ The main tasks here are:
 - open port `5000`
 - connect to the EC2 machine
 
+<br/>
+
 ## Main Goal Of This Setup
 
 The main goal is to make sure that our MLflow tracking server can run inside AWS and later receive experiment logs from our local machine.
@@ -32,16 +25,7 @@ The setup flow is:
 
 `AWS login -> IAM user -> AWS CLI configuration -> S3 bucket -> EC2 instance -> security group -> connect to server`
 
-## Why This Part Is Important
-
-Without this AWS setup:
-
-- the remote tracking URI cannot be used
-- MLflow cannot run on EC2
-- experiment artifacts cannot be stored in S3
-- the local project cannot send runs to a cloud-hosted MLflow server
-
-So this part builds the actual infrastructure needed for remote experiment tracking.
+<br/>
 
 ## Step 1. Log In To The AWS Console
 
@@ -58,15 +42,7 @@ Once logged in, we reach the AWS dashboard where we can access services like:
 - `S3`
 - `EC2`
 
-## Why This Step Comes First
-
-We need the AWS console because all the cloud resources for this project will be created from there.
-
-This includes:
-
-- the IAM user
-- the S3 bucket
-- the EC2 instance
+<br/>
 
 ## Step 2. Create An IAM User
 
@@ -84,7 +60,7 @@ A sample name used here is:
 MLflow-user
 ```
 
-## Why We Create A Separate IAM User
+### Why We Create A Separate IAM User?
 
 Creating a separate IAM user is useful because:
 
@@ -93,7 +69,7 @@ Creating a separate IAM user is useful because:
 - access can be controlled more safely
 - it matches better with real project practice
 
-## Access Given To The IAM User
+### Access Given To The IAM User
 
 In this setup, administrator access is attached directly to the IAM user.
 
@@ -103,7 +79,7 @@ This is done mainly for learning convenience because we need access to:
 - `EC2`
 - related AWS services
 
-## Important Real-World Note
+#### Important Real-World Note
 
 For learning, administrator access makes setup easier.
 
@@ -114,6 +90,8 @@ But in real company environments:
 - least-privilege access is the safer approach
 
 So for real projects, it is better to use only the required permissions.
+
+<br/>
 
 ## Step 3. Create Access Keys
 
@@ -131,7 +109,7 @@ While creating the key, we choose:
 Command Line Interface (CLI)
 ```
 
-## Why We Choose CLI Access
+### Why We Choose CLI Access?
 
 We choose CLI access because we want to use:
 
@@ -141,7 +119,7 @@ aws configure
 
 This will allow our local machine to talk to AWS services from the terminal.
 
-## Important Credentials Generated Here
+#### Important Credentials Generated Here
 
 When the key is created, AWS gives us:
 
@@ -152,7 +130,7 @@ We should store these carefully.
 
 Downloading the CSV is a good idea so we can refer to the credentials later if needed.
 
-## Security Reminder
+### Security Reminder
 
 These keys are sensitive.
 
@@ -163,6 +141,8 @@ So we should:
 - never expose them publicly
 - avoid sharing screenshots with visible keys
 - delete unused users or keys after practice
+
+<br/>
 
 ## Step 4. Install AWS CLI
 
@@ -180,21 +160,21 @@ AWS provides installation methods for:
 - `Linux`
 - `Mac`
 
-## Platform-Specific Idea
+### Platform-Specific Idea
 
-### Windows
+#### Windows
 
 We can download the MSI installer and run it directly.
 
-### Mac
+#### Mac
 
 We can use the GUI installer provided by AWS.
 
-### Linux
+#### Linux
 
 We can follow the shell-based installation steps from the AWS documentation.
 
-## How We Check AWS CLI Installation
+### How We Check AWS CLI Installation
 
 After installation, we can verify it from the terminal using:
 
@@ -204,14 +184,7 @@ aws
 
 If AWS CLI is installed correctly, we should see help output from the command.
 
-## Why This Check Matters
-
-If this command does not work:
-
-- AWS CLI is either not installed
-- or it is not available in the system path
-
-So checking it early saves time before configuration.
+<br/>
 
 ## Step 5. Configure AWS CLI Locally
 
@@ -228,7 +201,7 @@ This command asks for four things:
 - default region name
 - default output format
 
-## Values Used In This Setup
+### Values Used In This Setup
 
 The values used here are:
 
@@ -237,7 +210,7 @@ The values used here are:
 - region: `us-east-1`
 - output format: `json`
 
-## Why `aws configure` Is Important
+### Why `aws configure` Is Important?
 
 This step links our local terminal with our AWS account.
 
@@ -246,6 +219,8 @@ That means tools and code can later access resources like:
 - S3 bucket
 - EC2 services
 - MLflow artifact storage through AWS-backed resources
+
+<br/>
 
 ## Step 6. Understand What S3 Is
 
@@ -260,7 +235,7 @@ We can think of it as a cloud storage system that is commonly used to:
 - store model artifacts
 - store experiment-related outputs
 
-## Why We Need S3 In This Project
+### Why We Need S3 In This Project
 
 In this MLflow setup, `S3` will be used to store experiment artifacts.
 
@@ -273,6 +248,8 @@ That means things like:
 will be stored in the bucket.
 
 Later, the MLflow server running on EC2 will work with this storage.
+
+<br/>
 
 ## Step 7. Create An S3 Bucket
 
@@ -288,7 +265,7 @@ A sample bucket name used in this setup is:
 mlflow-tracking-1
 ```
 
-## Region Check Before Creating The Bucket
+### Region Check Before Creating The Bucket
 
 Before creating the bucket, we should check the AWS region.
 
@@ -300,7 +277,7 @@ us-east-1
 
 It is a good idea to keep the bucket and other services in the same region when possible.
 
-## Public Access Setting
+### Public Access Setting
 
 During bucket creation, the setup disables:
 
@@ -310,7 +287,7 @@ Block all public access
 
 Then AWS asks for confirmation that the bucket may become public.
 
-## Practical Note About Public Access
+### Practical Note About Public Access
 
 This is done here to make the setup easier for learning and access from code.
 
@@ -322,15 +299,7 @@ Safer practice usually means:
 - using IAM policies properly
 - exposing only what is necessary
 
-## What The Bucket Will Contain
-
-Right after creation, the bucket is empty.
-
-Later, it will hold MLflow-related artifacts such as:
-
-- run folders
-- model files
-- tracking outputs
+<br/>
 
 ## Step 8. Create An EC2 Instance
 
@@ -342,7 +311,7 @@ We do this from:
 EC2 -> Launch instance
 ```
 
-## Basic EC2 Configuration Used Here
+### Basic EC2 Configuration Used Here
 
 The setup uses:
 
@@ -351,21 +320,23 @@ The setup uses:
 - instance type: `t2.micro`
 - storage: `8 GB`
 
-## Why These Choices Make Sense
+### Why These Choices Make Sense
 
-### Ubuntu
+#### Ubuntu
 
 Ubuntu is commonly used and works well for server-side setup.
 
-### `t2.micro`
+#### `t2.micro`
 
 This is chosen because it is lightweight and often falls under free-tier usage for learning accounts.
 
-### `8 GB` Storage
+#### `8 GB` Storage
 
 This is usually enough for a basic MLflow tracking server setup.
 
-## Key Pair Requirement
+<br/>
+
+### Key Pair Requirement
 
 While launching the instance, AWS asks for a key pair.
 
@@ -379,7 +350,7 @@ MLflow-tracking
 
 When the key pair is created, a `.pem` file gets downloaded.
 
-## Why The Key Pair Matters
+#### Why The Key Pair Matters?
 
 The key pair is generally used for secure access to the EC2 machine.
 
@@ -387,7 +358,9 @@ Even if we are not using it immediately in this part, it is still part of the EC
 
 So we should keep the `.pem` file safely.
 
-## Inbound Traffic Settings During Launch
+<br/>
+
+### Inbound Traffic Settings During Launch
 
 During launch, the basic HTTP / HTTPS access options are enabled as needed.
 
@@ -396,6 +369,8 @@ But one more important port still needs to be opened manually:
 - port `5000`
 
 This is important because MLflow UI will run on that port.
+
+<br/>
 
 ## Step 9. Wait For The Instance To Start
 
@@ -408,6 +383,8 @@ We wait until it changes to:
 - running state
 
 Only after that do we continue with the security settings and connection step.
+
+<br/>
 
 ## Step 10. Add Security Group Rule For Port 5000
 
@@ -425,7 +402,7 @@ Then we add a new inbound rule:
 - port: `5000`
 - source: `0.0.0.0/0`
 
-## Why Port `5000` Is Required
+### Why Port `5000` Is Required
 
 MLflow tracking server usually runs on port `5000`.
 
@@ -435,7 +412,7 @@ If this port is not open:
 - the tracking server may still run internally
 - but we will not be able to open it from outside
 
-## Important Note About `0.0.0.0/0`
+### Important Note About `0.0.0.0/0`
 
 Using `0.0.0.0/0` means the port is open from any IP address.
 
@@ -446,6 +423,8 @@ In real environments, it is better to:
 - restrict access to known IPs
 - use proper network controls
 - avoid unnecessarily exposing services publicly
+
+<br/>
 
 ## Step 11. Connect To The EC2 Instance
 
@@ -465,7 +444,7 @@ Connect
 
 This opens a browser-based shell connected to the EC2 machine.
 
-## What We See After Connecting
+### What We See After Connecting
 
 After connection, we get a terminal prompt inside the EC2 machine.
 
@@ -480,13 +459,15 @@ That shell will be used to:
 - create the environment for the tracking server
 - launch the MLflow server
 
-## Why This Connection Step Matters
+### Why This Connection Step Matters
 
 This confirms that:
 
 - the instance is running
 - we can reach the machine
 - the environment is ready for server setup in the next part
+
+<br/>
 
 ## What We Complete At This Stage
 
@@ -501,6 +482,8 @@ By the end of this part, we have:
 - added a custom inbound rule for port `5000`
 - connected to the EC2 machine
 
+<br/>
+
 ## What Comes Next
 
 After this setup, the next step is to configure the EC2 machine itself.
@@ -514,19 +497,7 @@ That includes:
 - configuring AWS on the server
 - launching the MLflow tracking server
 
-## AWS Steps We Want To Remember
-
-### Configure AWS CLI
-
-```bash
-aws configure
-```
-
-### Verify AWS CLI
-
-```bash
-aws
-```
+<br/>
 
 ## Cloud Resources Created Here
 
@@ -543,6 +514,8 @@ aws
 
 - Ubuntu instance for the MLflow server
 - port `5000` opened for the tracking UI
+
+<br/>
 
 ## One-Line Summary
 

@@ -1,10 +1,8 @@
 # Introduction To MLflow In AWS
 
-![alt text](../Images/aws-mlflow.png)
-
 ## What We Are Learning In This Part
 
-Here we are trying to understand how to track machine learning experiments using `MLflow` on `AWS`.
+Here we are trying to understand **how to track machine learning experiments** using `MLflow` on `AWS`.
 
 The overall idea is:
 
@@ -15,36 +13,30 @@ The overall idea is:
 
 So the main focus is **remote MLflow tracking on AWS**.
 
+<br/>
+
 ## Connection With What We Learned Earlier
 
-Earlier, we had already seen experiment tracking with `MLflow` on `DagsHub`.
+* At very first, we had seen experiment tracking with `MLflow` on `local` machine.
+* Then, we had done the experiment tracking with `MLflow` on `DagsHub`.
+* Now we are extending the same idea and shifting the MLflow tracking part to `AWS`.
 
-That helped us understand how:
-
-- `Git` can manage code
-- `DVC` can manage data and versioning
-- `MLflow` can track experiments
-- `DagsHub` can act as a remote platform
-
-Now we are extending the same idea and shifting the MLflow tracking part to `AWS`.
+<br/>
 
 ## Why We Need MLflow On AWS
 
 In real projects, teams often do not keep everything in a platform like `DagsHub`.
 
 Many teams work with:
-
 - `GitHub`
 - `GitLab`
 - internal Git repositories
 
 At the same time, their applications and infrastructure are often hosted on `AWS`.
 
-Because of that, it makes sense for us to learn how to:
+Because of that, it makes sense for us to learn how to host the MLflow server in the cloud so that multiple team members use the same tracking setup.
 
-- host the MLflow server in the cloud
-- let multiple team members use the same tracking setup
-- keep experiment tracking closer to the production environment
+<br/>
 
 ## Main Goal
 
@@ -61,19 +53,7 @@ So the full picture is:
 
 `local ML project -> MLflow tracking server on AWS -> remote experiment tracking`
 
-## What Will Actually Run On AWS
-
-The main component hosted on AWS in this setup is:
-
-- the `MLflow` tracking server
-
-That means:
-
-- the project code can run locally
-- experiment details can be sent to the remote MLflow server
-- the tracking UI can be opened through an AWS-hosted URL
-
-For now, the focus is on experiment tracking only, not full application deployment.
+<br/>
 
 ## AWS Service We Need To Remember
 
@@ -83,7 +63,9 @@ The key AWS service here is:
 
 `EC2` is used to host the MLflow server.
 
-This is important because the MLflow UI and tracking backend need a machine where the server can actually run.
+This is important because the **MLflow UI and tracking backend need a machine** where the **server can actually run**.
+
+<br/>
 
 ## Our Learning Flow For This Module
 
@@ -96,6 +78,8 @@ The sequence we need to remember is:
 5. connect the local project to the remote MLflow server
 6. track experiments in the AWS-hosted MLflow UI
 
+<br/>
+
 ## Why This Setup Is Useful In Team Work
 
 This setup is useful in collaborative environments because:
@@ -105,14 +89,7 @@ This setup is useful in collaborative environments because:
 - tracking is no longer tied to one local machine
 - cloud-based tracking is closer to real production systems
 
-## Key Takeaway
-
-The most important thing we want to remember is:
-
-- we already know MLflow tracking with `DagsHub`
-- now we are learning MLflow tracking with `AWS`
-- the project itself stays simple
-- the main learning focus is remote experiment tracking through `EC2`
+<br/>
 
 ## One-Line Summary
 
