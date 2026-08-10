@@ -428,8 +428,12 @@ General pattern:
 ```bash
 dvc remote add origin <remote_location>
 ```
+Example:
+```bash
+dvc remote add origin s3://dvc
+```
 
-This is typically an S3-compatible DagsHub remote.
+This is typically an **S3-compatible** DagsHub remote.
 
 ### Step 2: Set the remote endpoint URL
 
@@ -440,14 +444,24 @@ General pattern:
 ```bash
 dvc remote modify origin endpointurl <dagshub_endpoint>
 ```
+Example:
+```bash
+dvc remote modify origin endpointurl https://dagshub.com/<username>/demo-dagshub.s3
+```
 
 ### Step 3: Set access key ID
 
 Copy the access key from the DagsHub UI and configure it for the remote.
+```bash
+dvc remote modify origin --local access_key_id 78b24bbd2d0d928808cb.........
+```
 
 ### Step 4: Set secret access key
 
 Copy the secret key from the DagsHub UI and configure it as well.
+```bash
+dvc remote modify origin --local secret_access_key 78b24bbd2d0d92...........
+```
 
 ### Step 5: Verify remote setup
 
