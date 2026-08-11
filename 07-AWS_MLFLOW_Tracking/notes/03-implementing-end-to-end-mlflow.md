@@ -201,10 +201,10 @@ This is one of the most important parts of the code.
 We create a variable for the remote MLflow tracking server:
 
 ```python
-remote_server_uri = ""
+remote_server_uri = "http://localhost/5000"
 ```
 
-At this stage, it is kept blank because the AWS setup is not finished yet.
+At this stage, we are using local because the AWS setup is not finished yet.
 
 Later, this variable will store the public tracking URI of the MLflow server running on `AWS EC2`.
 
@@ -257,6 +257,21 @@ if __name__ == "__main__":
     # 11. Set tracking URI
     # 12. Log model
 ```
+
+<br/>
+
+## Run the mlflow at local first and store model artifact to local repo
+
+1. Start mlflow server first
+   Open another terminal and write below command:
+   ```bash
+   mlflow server
+   ```
+2. Run the python script in another terminal with hyperparameter's value
+   ```bash
+   python train.py 0.1 0.8
+   ```
+3. Access the mlflow ui from "http://localhost/5000"
 
 <br/>
 

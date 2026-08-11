@@ -70,4 +70,3 @@ What we want to cover here:
 - `03-implementing-end-to-end-mlflow.md`
 - `04-aws-cloud-setup-for-mlflow-tracking.md`
 - `05-ec2-instance-tracking-with-s3.md`
-- `06-quick-revision.md`
