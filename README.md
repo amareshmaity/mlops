@@ -430,14 +430,17 @@ In that sense, MLOps is about managing flow with discipline.
 
 The folders in this repository cover a practical set of building blocks that commonly appear together:
 
-- `Git` helps version source code and collaboration history
+- `Git` helps version source code and collaboration history, also version small data
 - `DVC` helps version data and large model artifacts
 - `MLflow` helps track experiments and model metadata
 - `DagsHub` helps organize collaboration around code, data, and experiments
 - `Docker` helps package environments consistently
 - `Airflow` helps orchestrate ETL and ML workflows
+- `kalfka` helps to engineer streaming data
 - `AWS` helps provide cloud infrastructure for storage and tracking
-- `GitHub Actions` helps automate testing and workflow execution
+- `GitHub Actions` helps automate testing and workflow execution (not used in production level)
+- `Jenkins` helps to build CI and CD pipeline
+- `Circle CI` for CI and CD
 
 The important idea is not to memorize tools separately, but to understand the role each category plays in the larger system.
 
