@@ -2,257 +2,311 @@
 
 ## What We Are Doing In This Part
 
-Here we are completing the full remote MLflow tracking setup.
+Here we complete the full remote MLflow tracking setup.
 
-The main tasks here are:
+The goal is to:
 
-- install required tools inside EC2
-- set up the Python environment on the server
-- install `mlflow`, `awscli`, and `boto3`
-- configure AWS credentials inside EC2
-- start the MLflow tracking server
-- connect the local `app.py` to the remote server
-- verify runs in both MLflow UI and S3
-- clean up AWS resources after practice
-
-<br/>
-
-## Main Goal Of This Part
-
-The main goal is to make the MLflow tracking server actually run on the EC2 instance and use S3 as the artifact store.
-
-The flow is:
-
-`connect to EC2 -> install dependencies -> configure AWS inside EC2 -> launch MLflow server -> update local app -> run experiment -> verify in UI and S3`
+1. Connect to the EC2 instance
+2. Install the required tools
+3. Create the Python environment
+4. Install MLflow, AWS CLI, and boto3
+5. Configure AWS inside EC2
+6. Start the MLflow tracking server
+7. Connect the local `app.py` to the remote server
+8. Run an experiment
+9. Verify the run in MLflow UI and S3
+10. Clean up AWS resources
 
 <br/>
 
-## Why This Part Is Important
+## Main Goal
 
-This is the step where everything comes together.
+The goal is to run the MLflow tracking server on **EC2** and use **S3 as the artifact store**.
 
-Without this part:
+```text
+Local Machine
+     │
+     │  MLflow Tracking URI
+     ▼
+EC2
+     │
+     │  MLflow Tracking Server
+     │
+     ├── Tracking metadata → SQLite
+     │
+     └── Artifacts → S3
+```
 
-- EC2 would just be an empty machine
-- MLflow server would not start
-- S3 would not receive artifacts
-- local experiment runs would still not be tracked remotely
+The complete flow is:
 
-So this is the part that turns the cloud setup into a working MLflow tracking system.
+```text
+Connect to EC2
+      ↓
+Update packages
+      ↓
+Install Python tools
+      ↓
+Install Pipenv
+      ↓
+Install virtualenv
+      ↓
+Create MLflow folder
+      ↓
+Install MLflow + AWS CLI + boto3
+      ↓
+Enter Pipenv environment
+      ↓
+Configure AWS
+      ↓
+Start MLflow server
+      ↓
+Open MLflow UI
+      ↓
+Configure local tracking URI
+      ↓
+Run app.py
+      ↓
+Verify MLflow + S3
+      ↓
+Clean up AWS resources
+```
 
 <br/>
 
-## Step 1. Run Commands Inside The EC2 Machine
+## Step 1. Connect To The EC2 Machine
 
-Once we connect to the EC2 instance, we start running setup commands one by one in the server shell.
+First connect to the EC2 instance using SSH.
 
-The first command is:
+Example:
+
+```bash
+ssh -i <key-file.pem> ubuntu@<public-ip>
+```
+
+Once connected, commands are executed inside the EC2 server.
+
+<br/>
+
+## Step 2. Update The Package List
+
+Run:
 
 ```bash
 sudo apt update
 ```
 
-### Why We Run `apt update`
+### Why?
 
-This updates the package list on the EC2 machine.
-
-It is a common first step because:
-
-- package metadata becomes current
-- installation becomes smoother
-- we reduce issues caused by outdated package references
+This updates the package metadata on the EC2 machine so that package installation uses the latest available package information.
 
 <br/>
 
-## Step 2. Install Python Pip Tools
+## Step 3. Install Python And Pip Tools
 
-After updating packages, we install Python package tools using `apt`.
-
-The idea here is to make sure the machine has:
-
-- `python3`
-- `pip`
-- supporting Python tools
-
-This is necessary because MLflow and related libraries will be installed next.
-
-<br/>
-
-## Step 3. Install `pipenv`
-
-To keep the server setup clean, we install `pipenv` using `apt`:
+Install Python 3, pip, and Python virtual-environment support:
 
 ```bash
-sudo apt install pipenv
+sudo apt install -y python3 python3-pip python3-venv
 ```
 
-### Why We Use `pipenv`
-
-`pipenv` helps us create an isolated environment for the MLflow server inside the EC2 machine.
-
-That makes the server-side setup cleaner and easier to manage.
-
-<br/>
-
-## Step 4. Install `virtualenv`
-
-Next, we install `virtualenv`.
-
-This helps provide environment support on the EC2 machine.
-
-The command pattern becomes:
+Verify:
 
 ```bash
-sudo apt install virtualenv
+python3 --version
+pip3 --version
 ```
 
-### Why `virtualenv` Is Helpful Here
+### Why?
 
-It helps us keep the MLflow setup isolated from the rest of the server environment.
-
-That makes the server-side setup cleaner and easier to manage.
+These tools are required because MLflow and the other Python dependencies will be installed next.
 
 <br/>
 
-## Step 5. Create A Working Folder For MLflow
+## Step 4. Install Pipenv
 
-After the basic tools are installed, we create a directory for MLflow on the EC2 machine.
+Install Pipenv:
 
-The idea is:
+```bash
+sudo apt install -y pipenv
+```
+
+### What Is Pipenv?
+
+`pipenv` is a Python project and dependency management tool.
+
+It helps create and manage an isolated Python environment for the MLflow project.
+
+<br/>
+
+## Step 5. Install virtualenv
+
+Install `virtualenv`:
+
+```bash
+sudo apt install -y virtualenv
+```
+
+### What Is virtualenv?
+
+`virtualenv` is a tool for creating isolated Python environments.
+
+It keeps project dependencies separated from the system Python environment.
+
+> **Note:** Pipenv already manages an isolated environment for the project, so manually using `virtualenv` is not normally necessary when following the Pipenv workflow. It is included here because it is part of this course setup.
+
+<br/>
+
+## Step 6. Create A Working Folder For MLflow
+
+Create a directory and enter it:
 
 ```bash
 mkdir mlflow
 cd mlflow
 ```
 
-### Why We Create A Separate Folder
-
-This helps us keep the EC2-side tracking setup organized.
-
-Inside this folder, we install and run the tools needed for the MLflow server.
+This keeps the MLflow server setup organized in one location.
 
 <br/>
 
-## Step 6. Install MLflow Inside The EC2 Environment
+## Step 7. Install MLflow
 
-Inside the MLflow folder, we install `mlflow` using `pipenv`.
-
-The command is:
+Install MLflow through Pipenv:
 
 ```bash
 pipenv install mlflow
 ```
 
-This installs MLflow and its dependencies into the server-side environment.
+This installs MLflow and its dependencies inside the Pipenv environment.
 
-### Why MLflow Must Be Installed Here
+### Why?
 
-We need MLflow installed on EC2 because this machine is going to host the tracking server.
-
-That means the server itself must be able to run:
-
-- MLflow backend
-- model logging support
-- artifact routing to S3
+The EC2 machine will host the MLflow tracking server, so MLflow must be installed on EC2.
 
 <br/>
 
-## Step 7. Install AWS CLI Inside EC2
+## Step 8. Install AWS CLI
 
-After MLflow is installed, we also install AWS CLI inside the EC2 environment.
-
-The command is:
+Install AWS CLI through Pipenv:
 
 ```bash
 pipenv install awscli
 ```
 
-### Why AWS CLI Is Needed On The Server
+Verify it:
 
-AWS CLI is needed inside EC2 because the machine itself must be able to authenticate with AWS when interacting with services like S3.
+```bash
+pipenv run aws --version
+```
 
-This is separate from our local AWS CLI setup.
+### Why?
 
-So we need AWS configuration in two places:
-
-- on our local machine
-- on the EC2 machine
+The EC2 machine needs AWS CLI so it can interact with AWS services such as S3.
 
 <br/>
 
-### Step 8. Install `boto3`
+## Step 9. Install boto3
 
-Next, we install:
+Install boto3:
 
 ```bash
 pipenv install boto3
 ```
 
-### Why `boto3` Is Needed On EC2
+### Why?
 
-`boto3` is needed because MLflow and the environment must be able to work with AWS services programmatically.
+`boto3` is the Python SDK for AWS services.
 
-Since S3 is being used as the artifact store, `boto3` becomes an important part of the setup.
+It allows Python applications and tools to interact programmatically with services such as S3.
 
 <br/>
 
-## Step 9. Enter The `pipenv` Shell
+## Step 10. Enter The Pipenv Environment
 
-After the installations are complete, we activate the environment using:
+Enter the environment:
 
 ```bash
 pipenv shell
 ```
 
-This opens the virtual environment inside the EC2 machine.
+After entering it, the installed MLflow and other dependencies are available in the project environment.
 
-### Why This Step Matters
+You can verify MLflow:
 
-Once the shell is active:
-
-- MLflow commands run inside the configured environment
-- installed dependencies are available
-- the server setup becomes easier to manage
+```bash
+mlflow --version
+```
 
 <br/>
 
-### Step 10. Configure AWS Inside The EC2 Machine
+## Step 11. Configure AWS Inside EC2
 
-Now we configure AWS credentials inside the EC2 server itself.
-
-We use:
+Now configure AWS credentials on the EC2 machine:
 
 ```bash
 aws configure
 ```
 
-Then we provide:
+You will be asked for:
 
-- access key ID
-- secret access key
-- region: `us-east-1`
-- output format
+```text
+AWS Access Key ID:
+AWS Secret Access Key:
+Default region name:
+Default output format:
+```
 
-### Why We Need AWS Configuration On EC2 Too
+For this setup, the region used in the course is:
 
-Even though AWS CLI was already configured locally, that local configuration does not automatically transfer to the EC2 machine.
+```text
+us-east-1
+```
 
-The EC2 machine is a separate environment.
+### Verify The AWS Configuration
 
-So if MLflow on EC2 needs to access S3, then EC2 itself must know:
+Run:
 
-- which credentials to use
-- which region to use
+```bash
+aws sts get-caller-identity
+```
+
+If the credentials are valid, AWS returns information about the current identity.
+
+### Important
+
+The AWS configuration on your local machine does **not** automatically transfer to EC2.
+
+EC2 is a separate environment, so it needs its own AWS authentication method.
+
+> **Production note:** For EC2 workloads, an IAM role / instance profile is generally preferable to storing long-lived access keys with `aws configure`.
 
 <br/>
 
-## Step 11. Launch The MLflow Tracking Server
+## Step 12. Verify S3 Access
 
-This is the most important step in the EC2 setup.
+Before starting MLflow, verify that EC2 can access S3.
 
-Now we run the MLflow server command with the S3 bucket as the default artifact root.
+List the available buckets:
 
-The structure of the command is like this:
+```bash
+aws s3 ls
+```
+
+Then check the MLflow bucket:
+
+```bash
+aws s3 ls s3://mlflow-tracking-1/
+```
+
+If these commands work, the EC2 machine can communicate with S3 using the configured AWS identity.
+
+<br/>
+
+## Step 13. Start The MLflow Tracking Server
+
+This is the main step.
+
+Run:
 
 ```bash
 mlflow server \
@@ -262,266 +316,332 @@ mlflow server \
   --port 5000
 ```
 
-### Important Parts Of This Command
+### What Each Option Means
 
 #### `--backend-store-uri`
 
-This defines where MLflow stores tracking metadata.
+```text
+sqlite:///mlflow.db
+```
 
-In many setups, a local SQLite database is used for this.
+Stores MLflow tracking metadata in a local SQLite database.
+
+Examples of tracking metadata include:
+
+- parameters
+- metrics
+- run information
 
 #### `--default-artifact-root`
 
-This points to the S3 bucket.
+```text
+s3://mlflow-tracking-1
+```
 
-That means MLflow artifacts like:
+Defines S3 as the artifact location.
+
+Artifacts can include:
 
 - model files
 - run outputs
-- artifact folders
-
-will be stored in S3.
+- artifact directories
 
 #### `--host 0.0.0.0`
 
-This makes the server accessible externally, not just from localhost inside EC2.
+Allows the MLflow server to accept connections through the EC2 network interface instead of being available only through localhost.
 
 #### `--port 5000`
 
-This matches the security-group rule we created earlier.
+Runs MLflow on port `5000`.
 
-### What We Should See After Starting The Server
-
-Once the command runs successfully, MLflow starts listening on port `5000`.
-
-This confirms that:
-
-- the server is running
-- the port is active
-- the instance is ready to accept tracking traffic
+The EC2 security group must allow the required inbound traffic on this port.
 
 <br/>
 
-### Step 12. Open The MLflow UI From The Browser
+## Step 14. Open The MLflow UI
 
-Now we go back to the EC2 instance page and copy the **public IP address**.
+Copy the **public IP address** of the EC2 instance.
 
-Then we open:
+Open:
 
 ```text
 http://<public-ip>:5000
 ```
 
-### Why This URL Works
-
-This works because:
-
-- the MLflow server is running on EC2
-- it is bound to port `5000`
-- the security group allows inbound access to that port
-
-If everything is correct, the MLflow UI should open in the browser.
-
-### What This Confirms
-
-If the UI opens successfully, it confirms:
+If the UI opens successfully, it confirms that:
 
 - EC2 is reachable
-- MLflow server is running correctly
-- network access is configured correctly
+- MLflow is running
+- port `5000` is accessible
 
-At this stage, the UI may still be empty because no experiment has been sent to it yet.
+At this point, the UI may be empty because the local application has not sent an experiment run yet.
 
 <br/>
 
-## Step 13. Update `remote_server_uri` In `app.py`
+## Step 15. Configure The Local `app.py`
 
-Now we go back to the local project and update the tracking URI in `app.py`.
+Go back to the local project.
 
-Earlier, we had kept:
+Update:
 
 ```python
 remote_server_uri = ""
 ```
 
-Now we replace it with the actual EC2 MLflow URL, such as:
+to:
 
 ```python
 remote_server_uri = "http://<public-ip>:5000"
 ```
 
-### Why This Step Is Necessary
+Replace `<public-ip>` with the actual public IP address of the EC2 instance.
 
-Until we update this variable:
+### Why?
 
-- our local script does not know where the remote MLflow server is
-- experiment logs cannot be sent to EC2
-
-So this step connects the local code to the cloud tracking server.
+This tells the local application where the remote MLflow tracking server is running.
 
 <br/>
 
-## Step 14. Set The MLflow Tracking URI Locally
+## Step 16. Set The MLflow Tracking URI Locally
 
-Before running the project, we set the tracking URI in our local terminal:
+In the local terminal, run:
 
 ```bash
 export MLFLOW_TRACKING_URI=http://<public-ip>:5000
 ```
 
-### Why This Step Matters
+Verify:
 
-This makes sure the local process knows exactly which MLflow tracking server it should use.
+```bash
+echo $MLFLOW_TRACKING_URI
+```
+
+This tells the local process which MLflow tracking server to use.
 
 <br/>
 
-## Step 15. Run `app.py`
+## Step 17. Run `app.py`
 
-After setting the tracking URI correctly, we run the script:
+Run the local application:
 
 ```bash
 python app.py
 ```
 
-Now the experiment should run successfully and the model should be logged to the remote MLflow server.
+The experiment should now send its tracking information to the MLflow server running on EC2.
 
 <br/>
 
-## Step 16. Verify The Run In MLflow UI
+## Step 18. Verify The Run In MLflow UI
 
-Now when we refresh the MLflow UI in the browser, we should see the tracked experiment.
+Refresh:
 
-Inside the UI we can inspect:
+```text
+http://<public-ip>:5000
+```
+
+You should now see the experiment run.
+
+Check:
 
 - run details
-- metrics like `RMSE`, `MAE`, and `R2`
-- parameters like `alpha` and `l1_ratio`
+- metrics such as `RMSE`, `MAE`, and `R2`
+- parameters such as `alpha` and `l1_ratio`
 - logged model artifacts
 
 <br/>
 
-## Step 17. Verify The Artifacts In S3
+## Step 19. Verify Artifacts In S3
 
-After the run succeeds, we also check the S3 bucket.
+Check the S3 bucket:
 
-When we refresh the bucket contents, we should see new folders created by MLflow.
+```bash
+aws s3 ls s3://mlflow-tracking-1/
+```
 
-These folders contain:
+You should see directories created by MLflow.
+
+These can contain:
 
 - experiment artifact directories
 - model files
 - outputs generated during the run
 
-<br/>
+You can also inspect the bucket recursively:
 
-## Step 18. Update The Project README
-
-At this stage, it is also useful to update the project `README.md` with:
-
-- the MLflow tracking URI
-- the EC2 commands used
-- the setup steps followed
-
-This helps us because:
-
-- the setup has many steps
-- it is easier to repeat the process later
-- the README becomes a ready-made checklist
+```bash
+aws s3 ls s3://mlflow-tracking-1/ --recursive
+```
 
 <br/>
 
-## Step 19. Clean Up AWS Resources After Practice
+## Step 20. Update The Project README
 
-After the experiment tracking has been verified, the final step is cleanup.
+Document the setup in the project's `README.md`.
 
-This is extremely important in AWS practice work.
+Include:
 
-### Terminate The EC2 Instance
+- MLflow tracking URI
+- EC2 commands
+- AWS/S3 commands
+- setup steps
+- MLflow server command
 
-We should terminate the EC2 instance once we are done.
-
-Why:
-
-- running instances may continue generating charges
-- unused resources create unnecessary cost
-
-So after testing, we should stop or terminate the instance properly.
-
-### Delete The IAM User If It Was Created Only For Practice
-
-If the IAM user was created only for this setup, we should also delete it after use.
-
-This helps because:
-
-- unused credentials should not remain active
-- it reduces security risk
-- it keeps the AWS account cleaner
-
-### What About The S3 Bucket
-
-The S3 bucket can remain if we want to keep the artifacts.
-
-Usually, it does not create the same kind of immediate compute cost as EC2.
-
-Still, we should be aware of:
-
-- stored data
-- bucket permissions
-- whether we still need it
+This makes the setup easier to reproduce later.
 
 <br/>
 
-## Commands We Want To Remember
+## Step 21. Clean Up AWS Resources
 
-### Update Package List
+After verifying the complete setup, clean up the resources used for practice.
+
+## Terminate The EC2 Instance
+
+If the instance is no longer needed, stop or terminate it.
+
+Why?
+
+- Running EC2 instances can generate charges.
+- Unused resources create unnecessary cost.
+
+## Remove Practice IAM Credentials
+
+If an IAM user was created only for this practice setup, remove the unused credentials/user according to your AWS setup.
+
+This reduces unnecessary security exposure.
+
+## S3 Bucket
+
+Keep the S3 bucket if you want to retain the MLflow artifacts.
+
+If you no longer need the bucket, clean it up as well.
+
+<br/>
+
+## Essential Commands To Remember
+
+### EC2 / Linux
+
+#### Update Packages
 
 ```bash
 sudo apt update
 ```
 
-### Install MLflow In EC2
+#### Install Python
+
+```bash
+sudo apt install -y python3 python3-pip python3-venv
+```
+
+#### Install Pipenv
+
+```bash
+sudo apt install -y pipenv
+```
+
+#### Install virtualenv
+
+```bash
+sudo apt install -y virtualenv
+```
+
+#### Create MLflow Directory
+
+```bash
+mkdir mlflow
+cd mlflow
+```
+
+<br/>
+
+### Pipenv
+
+#### Install MLflow
 
 ```bash
 pipenv install mlflow
 ```
 
-### Install AWS CLI In EC2
+#### Install AWS CLI
 
 ```bash
 pipenv install awscli
 ```
 
-### Install `boto3`
+#### Install boto3
 
 ```bash
 pipenv install boto3
 ```
 
-### Activate `pipenv` Shell
+#### Enter Environment
 
 ```bash
 pipenv shell
 ```
 
-### Configure AWS Inside EC2
+<br/>
+
+### AWS CLI
+
+#### Check AWS CLI
+
+```bash
+aws --version
+```
+
+#### Configure AWS
 
 ```bash
 aws configure
 ```
 
-### Start MLflow Server
+#### Check Current AWS Identity
 
 ```bash
-mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root s3://mlflow-tracking-1 --host 0.0.0.0 --port 5000
+aws sts get-caller-identity
 ```
 
-### Run Local Script
+#### List S3 Buckets
+
+```bash
+aws s3 ls
+```
+
+#### List MLflow Bucket
+
+```bash
+aws s3 ls s3://mlflow-tracking-1/
+```
+
+#### List S3 Contents Recursively
+
+```bash
+aws s3 ls s3://mlflow-tracking-1/ --recursive
+```
+
+<br/>
+
+### MLflow
+
+#### Start MLflow Server
+
+```bash
+mlflow server \
+  --backend-store-uri sqlite:///mlflow.db \
+  --default-artifact-root s3://mlflow-tracking-1 \
+  --host 0.0.0.0 \
+  --port 5000
+```
+
+#### Run Local Application
 
 ```bash
 python app.py
 ```
 
-### Export Tracking URI
+#### Set Tracking URI
 
 ```bash
 export MLFLOW_TRACKING_URI=http://<public-ip>:5000
@@ -529,6 +649,85 @@ export MLFLOW_TRACKING_URI=http://<public-ip>:5000
 
 <br/>
 
+## Complete Setup Command Sequence
+
+For quick revision:
+
+```bash
+# 1. Update packages
+sudo apt update
+
+# 2. Install Python tools
+sudo apt install -y python3 python3-pip python3-venv
+
+# 3. Install environment tools
+sudo apt install -y pipenv
+sudo apt install -y virtualenv
+
+# 4. Create MLflow project directory
+mkdir mlflow
+cd mlflow
+
+# 5. Install dependencies
+pipenv install mlflow
+pipenv install awscli
+pipenv install boto3
+
+# 6. Enter environment
+pipenv shell
+
+# 7. Configure AWS
+aws configure
+
+# 8. Verify AWS
+aws sts get-caller-identity
+aws s3 ls
+
+# 9. Start MLflow
+mlflow server \
+  --backend-store-uri sqlite:///mlflow.db \
+  --default-artifact-root s3://mlflow-tracking-1 \
+  --host 0.0.0.0 \
+  --port 5000
+```
+
+Then, on the **local machine**:
+
+```bash
+export MLFLOW_TRACKING_URI=http://<public-ip>:5000
+python app.py
+```
+
+<br/>
+
+## Final Architecture
+
+```text
+                 LOCAL MACHINE
+                      │
+                      │
+             MLFLOW_TRACKING_URI
+                      │
+                      ▼
+              ┌───────────────┐
+              │      EC2      │
+              │               │
+              │ MLflow Server │
+              │   Port 5000   │
+              └───────┬───────┘
+                      │
+             ┌────────┴────────┐
+             │                 │
+             ▼                 ▼
+       SQLite Database        S3
+       Tracking Metadata    Artifacts
+                            │
+                            ├── Models
+                            ├── Outputs
+                            └── Run Artifacts
+```
+<br/>
+
 ## One-Line Summary
 
-Here we complete the AWS-based MLflow setup by running the tracking server on EC2, storing artifacts in S3, connecting the local training script to the remote URI, verifying the run in MLflow and S3, and cleaning up the cloud resources afterward.
+**EC2 runs the MLflow tracking server, SQLite stores tracking metadata, S3 stores artifacts, and the local `app.py` sends experiment tracking data to the remote MLflow server.**
