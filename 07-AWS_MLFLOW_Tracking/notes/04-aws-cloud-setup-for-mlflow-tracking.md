@@ -91,7 +91,13 @@ A separate IAM user is useful for learning because it:
 - keeps credentials separate
 - makes permissions easier to manage
 
+### Instance
+
+- select single instead of group
+
 ### Permissions
+
+- assign **administrator access**
 
 For this learning setup, the course uses administrator access so the user can work with services such as:
 
@@ -159,6 +165,8 @@ Install the appropriate AWS CLI version for your operating system:
 - Windows
 - macOS
 - Linux
+
+Note: choose single user and then download .msi file
 
 After installation, verify it:
 

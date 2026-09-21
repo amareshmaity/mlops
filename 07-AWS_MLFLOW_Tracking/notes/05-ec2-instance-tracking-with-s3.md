@@ -531,7 +531,7 @@ sudo apt update
 #### Install Python
 
 ```bash
-sudo apt install -y python3 python3-pip python3-venv
+sudo apt install -y python3-pip
 ```
 
 #### Install Pipenv
@@ -630,10 +630,53 @@ aws s3 ls s3://mlflow-tracking-1/ --recursive
 ```bash
 mlflow server \
   --backend-store-uri sqlite:///mlflow.db \
-  --default-artifact-root s3://mlflow-tracking-1 \
+  --default-artifact-root s3://mlflow-tracking-bucket-327 \
   --host 0.0.0.0 \
-  --port 5000
+  --port 5000 \
+  --workers 1 \
+  --allowed-hosts "*" \
+  --cors-allowed-origins "*"
 ```
+
+#### Check mlflow ui
+
+In browser search for "http://ec2-**\***-255.compute-1.amazonaws.com:5000"
+
+The above url is the public dns in aws
+
+---
+
+### Solve the out-of-memory problem (RAM)
+
+To run the application minimum RAM required is 4 GB. But AWS free EC2 instance type like `t3-micron` has RAM 1 GB that is not enough. That's why you have to select `t3-small` or high instance.
+
+You can also create virtual RAM
+
+```bash
+pkill -9 -f mlflow
+
+# Allocate 2 Gigabytes of space for the swap file
+sudo fallocate -l 2G /swapfile
+
+# Lock permissions so only the root user can read it
+sudo chmod 600 /swapfile
+
+# Set up the file as Linux swap area
+sudo mkswap /swapfile
+
+# Enable the swap space immediately
+sudo swapon /swapfile
+
+
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+# verify the extra memory has been allocated
+free -h
+
+
+```
+
+---
 
 #### Run Local Application
 
@@ -726,6 +769,7 @@ python app.py
                             ├── Outputs
                             └── Run Artifacts
 ```
+
 <br/>
 
 ## One-Line Summary
