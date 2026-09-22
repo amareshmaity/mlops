@@ -304,16 +304,17 @@ If these commands work, the EC2 machine can communicate with S3 using the config
 
 ## Step 13. Start The MLflow Tracking Server
 
-This is the main step.
-
-Run:
+#### Start MLflow Server
 
 ```bash
 mlflow server \
   --backend-store-uri sqlite:///mlflow.db \
-  --default-artifact-root s3://mlflow-tracking-1 \
+  --default-artifact-root s3://mlflow-tracking-bucket-327 \
   --host 0.0.0.0 \
-  --port 5000
+  --port 5000 \
+  --workers 1 \
+  --allowed-hosts "*" \
+  --cors-allowed-origins "*"
 ```
 
 ### What Each Option Means
@@ -355,6 +356,44 @@ Allows the MLflow server to accept connections through the EC2 network interface
 Runs MLflow on port `5000`.
 
 The EC2 security group must allow the required inbound traffic on this port.
+
+#### Check mlflow ui
+
+In browser search for "http://ec2-**\***-255.compute-1.amazonaws.com:5000"
+
+The above url is the public dns in aws
+
+---
+
+### Solve the out-of-memory problem (RAM)
+
+To run the application minimum RAM required is 4 GB. But AWS free EC2 instance type like `t3-micron` has RAM 1 GB that is not enough. That's why you have to select `t3-small` or high instance.
+
+You can also create virtual RAM
+
+```bash
+pkill -9 -f mlflow
+
+# Allocate 2 Gigabytes of space for the swap file
+sudo fallocate -l 2G /swapfile
+
+# Lock permissions so only the root user can read it
+sudo chmod 600 /swapfile
+
+# Set up the file as Linux swap area
+sudo mkswap /swapfile
+
+# Enable the swap space immediately
+sudo swapon /swapfile
+
+
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+# verify the extra memory has been allocated
+free -h
+
+
+```
 
 <br/>
 
